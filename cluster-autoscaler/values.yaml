@@ -14,7 +14,7 @@ autoDiscovery:
   # Enable autodiscovery for `cloudProvider=clusterapi`, for groups matching `autoDiscovery.labels`.
   # Enable autodiscovery for `cloudProvider=gce`, but no MIG tagging required.
   # Enable autodiscovery for `cloudProvider=magnum`, for groups matching `autoDiscovery.roles`.
-  clusterName:  # cluster.local
+  clusterName: sy-kim-eks-cluster
 
   # autoDiscovery.tags -- ASG tags to match, run through `tpl`.
   tags:
@@ -62,7 +62,7 @@ autoscalingGroupsnamePrefix: []
 awsAccessKeyID: ""
 
 # awsRegion -- AWS region (required if `cloudProvider=aws`)
-awsRegion: us-east-1
+awsRegion: ap-southeast-3
 
 # awsSecretAccessKey -- AWS access secret key ([if AWS user keys used](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#using-aws-credentials))
 awsSecretAccessKey: ""
@@ -174,17 +174,17 @@ extraArgs:
   # skip-nodes-with-local-storage: true
   # expander: random
   # scale-down-enabled: true
-  # balance-similar-node-groups: true
+  balance-similar-node-groups: true
   # min-replica-count: 0
   # scale-down-utilization-threshold: 0.5
   # scale-down-non-empty-candidates-count: 30
   # max-node-provision-time: 15m0s
   # scan-interval: 10s
-  # scale-down-delay-after-add: 10m
-  # scale-down-delay-after-delete: 0s
-  # scale-down-delay-after-failure: 3m
-  # scale-down-unneeded-time: 10m
-  # skip-nodes-with-system-pods: true
+  scale-down-delay-after-add: 5m
+  scale-down-delay-after-delete: 1m
+  scale-down-delay-after-failure: 3m
+  scale-down-unneeded-time: 10m
+  skip-nodes-with-system-pods: false
   # balancing-ignore-label_1: first-label-to-ignore
   # balancing-ignore-label_2: second-label-to-ignore
 
