@@ -164,17 +164,13 @@ To create a pod that you can use as a Kafka client run the following commands:
 
     PRODUCER:
         kafka-console-producer.sh \
-            {{- if or (include "kafka.client.saslAuthentication" .) (include "kafka.client.tlsEncryption" .) }}
-            --producer.config /tmp/client.properties \
-            {{- end }}
+            {{ if or (include "kafka.client.saslAuthentication" .) (include "kafka.client.tlsEncryption" .) }}--producer.config /tmp/client.properties \{{ end }}
             --broker-list {{ join "," $brokerList }} \
             --topic test
 
     CONSUMER:
         kafka-console-consumer.sh \
-            {{- if or (include "kafka.client.saslAuthentication" .) (include "kafka.client.tlsEncryption" .) }}
-            --consumer.config /tmp/client.properties \
-            {{- end }}
+            {{ if or (include "kafka.client.saslAuthentication" .) (include "kafka.client.tlsEncryption" .) }}--consumer.config /tmp/client.properties \{{ end }}
             --bootstrap-server {{ $fullname }}.{{ $releaseNamespace }}.svc.{{ $clusterDomain }}:{{ .Values.service.ports.client }} \
             --topic test \
             --from-beginning
@@ -216,12 +212,6 @@ To connect to your Kafka server from outside the cluster, follow the instruction
         echo "$(kubectl get svc --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "kafka.name" . }},app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/component=kafka,pod" -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}' | tr ' ' '\n')"
 
     Kafka Brokers port: {{ .Values.externalAccess.service.ports.external }}
-
-{{- else if eq "ClusterIP" .Values.externalAccess.service.type }}
-
-    Kafka brokers domain: Use your provided hostname to reach Kafka brokers, {{ .Values.externalAccess.service.domain }}
-
-    Kafka brokers port: You will have a different port for each Kafka broker starting at {{ .Values.externalAccess.service.ports.external }}
 
 {{- end }}
 

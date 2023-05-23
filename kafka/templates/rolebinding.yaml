@@ -1,4 +1,4 @@
-{{- if .Values.rbac.create }}
+{{- if and .Values.serviceAccount.create .Values.rbac.create }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:

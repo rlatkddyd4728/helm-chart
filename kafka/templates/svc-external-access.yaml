@@ -17,9 +17,6 @@ metadata:
     {{- if $root.Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" $root.Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if $root.Values.externalAccess.service.labels }}
-    {{- include "common.tplvalues.render" ( dict "value" $root.Values.externalAccess.service.labels "context" $) | nindent 4 }}
-    {{- end }}
   {{- if or $root.Values.externalAccess.service.annotations $root.Values.commonAnnotations $root.Values.externalAccess.service.loadBalancerAnnotations }}
   annotations:
     {{- if and (not (empty $root.Values.externalAccess.service.loadBalancerAnnotations)) (eq (len $root.Values.externalAccess.service.loadBalancerAnnotations) $replicaCount) }}
@@ -42,11 +39,10 @@ spec:
   loadBalancerSourceRanges: {{- toYaml $root.Values.externalAccess.service.loadBalancerSourceRanges | nindent 4 }}
   {{- end }}
   {{- end }}
-  publishNotReadyAddresses: {{ $root.Values.externalAccess.service.publishNotReadyAddresses }}
   ports:
     - name: tcp-kafka
       port: {{ $root.Values.externalAccess.service.ports.external }}
-      {{- if le (add $i 1) (len $root.Values.externalAccess.service.nodePorts) }}
+      {{- if not (empty $root.Values.externalAccess.service.nodePorts) }}
       nodePort: {{ index $root.Values.externalAccess.service.nodePorts $i }}
       {{- else }}
       nodePort: null
@@ -55,9 +51,6 @@ spec:
     {{- if $root.Values.externalAccess.service.extraPorts }}
     {{- include "common.tplvalues.render" (dict "value" $root.Values.externalAccess.service.extraPorts "context" $) | nindent 4 }}
     {{- end }}
-  {{- if and (eq $root.Values.externalAccess.service.type "NodePort") (le (add $i 1) (len $root.Values.externalAccess.service.externalIPs)) }}
-  externalIPs: [{{ index $root.Values.externalAccess.service.externalIPs $i | quote }}]
-  {{- end }}
   selector: {{- include "common.labels.matchLabels" $ | nindent 4 }}
     app.kubernetes.io/component: kafka
     statefulset.kubernetes.io/pod-name: {{ $targetPod }}

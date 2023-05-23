@@ -23,7 +23,6 @@ metadata:
 spec:
   type: ClusterIP
   clusterIP: None
-  publishNotReadyAddresses: {{ .Values.service.headless.publishNotReadyAddresses }}
   ports:
     - name: tcp-client
       port: {{ .Values.service.ports.client }}
@@ -33,11 +32,5 @@ spec:
       port: {{ .Values.service.ports.internal }}
       protocol: TCP
       targetPort: kafka-internal
-    {{- if and .Values.kraft.enabled (contains "controller" .Values.kraft.processRoles) }}
-    - name: tcp-controller
-      protocol: TCP
-      port: {{ .Values.service.ports.controller }}
-      targetPort: kafka-ctlr
-    {{- end }}
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: kafka

@@ -214,11 +214,11 @@ SASL_PLAINTEXT
 Return the protocol used with zookeeper
 */}}
 {{- define "kafka.zookeeper.protocol" -}}
-{{- if and .Values.auth.zookeeper.tls.enabled .Values.zookeeper.auth.client.enabled .Values.auth.sasl.jaas.zookeeperUser -}}
+{{- if and .Values.auth.zookeeper.tls.enabled .Values.zookeeper.auth.enabled .Values.auth.sasl.jaas.zookeeperUser -}}
 SASL_SSL
 {{- else if and .Values.auth.zookeeper.tls.enabled -}}
 SSL
-{{- else if and .Values.zookeeper.auth.client.enabled .Values.auth.sasl.jaas.zookeeperUser -}}
+{{- else if and .Values.zookeeper.auth.enabled .Values.auth.sasl.jaas.zookeeperUser -}}
 SASL
 {{- else -}}
 PLAINTEXT
@@ -242,7 +242,7 @@ Return true if a JAAS credentials secret object should be created
 */}}
 {{- define "kafka.createJaasSecret" -}}
 {{- $secretName := .Values.auth.sasl.jaas.existingSecret -}}
-{{- if and (or (include "kafka.client.saslAuthentication" .) (include "kafka.interBroker.saslAuthentication" .) (and .Values.zookeeper.auth.client.enabled .Values.auth.sasl.jaas.zookeeperUser)) (empty $secretName) -}}
+{{- if and (or (include "kafka.client.saslAuthentication" .) (include "kafka.interBroker.saslAuthentication" .) (and .Values.zookeeper.auth.enabled .Values.auth.sasl.jaas.zookeeperUser)) (empty $secretName) -}}
     {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -276,17 +276,6 @@ Returns the secret name for the Kafka Provisioning client
     {{- printf "%s" (tpl .Values.provisioning.auth.tls.passwordsSecret $) -}}
 {{- else -}}
     {{- printf "%s-client-secret" (include "common.names.fullname" .) -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the Kafka Provisioning client
-*/}}
-{{- define "kafka.provisioning.serviceAccountName" -}}
-{{- if .Values.provisioning.serviceAccount.create -}}
-    {{ default (include "common.names.fullname" .) .Values.provisioning.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.provisioning.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
@@ -372,8 +361,6 @@ Compile all warnings into a single message, and call fail.
 {{- $messages := list -}}
 {{- $messages := append $messages (include "kafka.validateValues.authProtocols" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.nodePortListLength" .) -}}
-{{- $messages := append $messages (include "kafka.validateValues.externalIPListLength" .) -}}
-{{- $messages := append $messages (include "kafka.validateValues.domainSpecified" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.externalAccessServiceType" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.externalAccessAutoDiscoveryRBAC" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.externalAccessAutoDiscoveryIPsOrNames" .) -}}
@@ -384,9 +371,6 @@ Compile all warnings into a single message, and call fail.
 {{- $messages := append $messages (include "kafka.validateValues.tlsSecrets" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.tlsSecrets.length" .) -}}
 {{- $messages := append $messages (include "kafka.validateValues.tlsPasswords" .) -}}
-{{- $messages := append $messages (include "kafka.validateValues.kraftMode" .) -}}
-{{- $messages := append $messages (include "kafka.validateValues.ClusterIdDefinedIfKraft" .) -}}
-{{- $messages := append $messages (include "kafka.validateValues.controllerQuorumVotersDefinedIfKraft" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
 
@@ -406,43 +390,19 @@ kafka: auth.clientProtocol auth.externalClientProtocol auth.interBrokerProtocol
 
 {{/* Validate values of Kafka - number of replicas must be the same as NodePort list */}}
 {{- define "kafka.validateValues.nodePortListLength" -}}
-{{- $replicaCount := int .Values.replicaCount -}}
-{{- $nodePortListLength := len .Values.externalAccess.service.nodePorts -}}
-{{- $nodePortListIsEmpty := empty .Values.externalAccess.service.nodePorts -}}
-{{- $nodePortListLengthEqualsReplicaCount := eq $nodePortListLength $replicaCount -}}
-{{- $externalIPListIsEmpty := empty .Values.externalAccess.service.externalIPs -}}
-{{- if and .Values.externalAccess.enabled (not .Values.externalAccess.autoDiscovery.enabled) (eq .Values.externalAccess.service.type "NodePort") (or (and (not $nodePortListIsEmpty) (not $nodePortListLengthEqualsReplicaCount)) (and $nodePortListIsEmpty $externalIPListIsEmpty)) -}}
+{{- $replicaCount := int .Values.replicaCount }}
+{{- $nodePortListLength := len .Values.externalAccess.service.nodePorts }}
+{{- if and .Values.externalAccess.enabled (not .Values.externalAccess.autoDiscovery.enabled) (not (eq $replicaCount $nodePortListLength )) (eq .Values.externalAccess.service.type "NodePort") -}}
 kafka: .Values.externalAccess.service.nodePorts
-    Number of replicas and nodePort array length must be the same. Currently: replicaCount = {{ $replicaCount }} and length nodePorts = {{ $nodePortListLength }} - {{ $externalIPListIsEmpty }}
-{{- end -}}
-{{- end -}}
-
-{{/* Validate values of Kafka - number of replicas must be the same as externalIPs list */}}
-{{- define "kafka.validateValues.externalIPListLength" -}}
-{{- $replicaCount := int .Values.replicaCount -}}
-{{- $externalIPListLength := len .Values.externalAccess.service.externalIPs -}}
-{{- $externalIPListIsEmpty := empty .Values.externalAccess.service.externalIPs -}}
-{{- $externalIPListEqualsReplicaCount := eq $externalIPListLength $replicaCount -}}
-{{- $nodePortListIsEmpty := empty .Values.externalAccess.service.nodePorts -}}
-{{- if and .Values.externalAccess.enabled (not .Values.externalAccess.autoDiscovery.enabled) (eq .Values.externalAccess.service.type "NodePort") (or (and (not $externalIPListIsEmpty) (not $externalIPListEqualsReplicaCount)) (and $externalIPListIsEmpty $nodePortListIsEmpty)) -}}
-kafka: .Values.externalAccess.service.externalIPs
-    Number of replicas and externalIPs array length must be the same. Currently: replicaCount = {{ $replicaCount }} and length externalIPs = {{ $externalIPListLength }}
-{{- end -}}
-{{- end -}}
-
-{{/* Validate values of Kafka - domain must be defined if external service type ClusterIP */}}
-{{- define "kafka.validateValues.domainSpecified" -}}
-{{- if and (eq .Values.externalAccess.service.type "ClusterIP") (eq .Values.externalAccess.service.domain "") -}}
-kafka: .Values.externalAccess.service.domain
-    Domain must be specified if service type ClusterIP is set for external service
+    Number of replicas and nodePort array length must be the same. Currently: replicaCount = {{ $replicaCount }} and nodePorts = {{ $nodePortListLength }}
 {{- end -}}
 {{- end -}}
 
 {{/* Validate values of Kafka - service type for external access */}}
 {{- define "kafka.validateValues.externalAccessServiceType" -}}
-{{- if and (not (eq .Values.externalAccess.service.type "NodePort")) (not (eq .Values.externalAccess.service.type "LoadBalancer")) (not (eq .Values.externalAccess.service.type "ClusterIP")) -}}
+{{- if and (not (eq .Values.externalAccess.service.type "NodePort")) (not (eq .Values.externalAccess.service.type "LoadBalancer")) -}}
 kafka: externalAccess.service.type
-    Available service type for external access are NodePort, LoadBalancer or ClusterIP.
+    Available service type for external access are NodePort or LoadBalancer.
 {{- end -}}
 {{- end -}}
 
@@ -482,7 +442,7 @@ kafka: externalAccess.service.{{ .element }}
 
 {{/* Validate values of Kafka - SASL mechanisms must be provided when using SASL */}}
 {{- define "kafka.validateValues.saslMechanisms" -}}
-{{- if and (or (.Values.auth.clientProtocol | regexFind "sasl") (.Values.auth.interBrokerProtocol | regexFind "sasl") (and .Values.zookeeper.auth.client.enabled .Values.auth.sasl.jaas.zookeeperUser)) (not .Values.auth.sasl.mechanisms) }}
+{{- if and (or (.Values.auth.clientProtocol | regexFind "sasl") (.Values.auth.interBrokerProtocol | regexFind "sasl") (and .Values.zookeeper.auth.enabled .Values.auth.sasl.jaas.zookeeperUser)) (not .Values.auth.sasl.mechanisms) }}
 kafka: auth.sasl.mechanisms
     The SASL mechanisms are required when either auth.clientProtocol or auth.interBrokerProtocol use SASL or Zookeeper user is provided.
 {{- end }}
@@ -519,37 +479,11 @@ kafka: .Values.auth.tls.existingSecrets
 
 {{/* Validate values of Kafka provisioning - keyPasswordSecretKey, keystorePasswordSecretKey or truststorePasswordSecretKey must not be used without passwordsSecret */}}
 {{- define "kafka.validateValues.tlsPasswords" -}}
-{{- if and (include "kafka.client.tlsEncryption" .) (not .Values.provisioning.auth.tls.passwordsSecret) }}
-{{- if or .Values.provisioning.auth.tls.keyPasswordSecretKey .Values.provisioning.auth.tls.keystorePasswordSecretKey .Values.provisioning.auth.tls.truststorePasswordSecretKey }}
+{{- if and (include "kafka.client.tlsEncryption" .) (not .Values.auth.tls.passwordsSecret) }}
+{{- if or .Values.auth.tls.keyPasswordSecretKey .Values.auth.tls.keystorePasswordSecretKey .Values.auth.tls.truststorePasswordSecretKey }}
 kafka: auth.tls.keyPasswordSecretKey,auth.tls.keystorePasswordSecretKey,auth.tls.truststorePasswordSecretKey
     auth.tls.keyPasswordSecretKey,auth.tls.keystorePasswordSecretKey,auth.tls.truststorePasswordSecretKey
     must not be used without passwordsSecret setted.
 {{- end -}}
-{{- end -}}
-{{- end -}}
-
-{{/* Validate values of Kafka Kraft mode. It cannot be used with zookeeper  */}}
-{{- define "kafka.validateValues.kraftMode" -}}
-{{- $externalZKlen := len .Values.externalZookeeper.servers}}
-{{- if and .Values.kraft.enabled (or .Values.zookeeper.enabled (gt $externalZKlen 0))  }}
-kafka: Kraft mode
-    You cannot use Kraft mode and Zookeeper at the same time. They are mutually exclusive. Disable zookeeper in '.Values.zookeeper.enabled'  and delete values from '.Values.externalZookeeper.servers' if you want to use Kraft mode
-{{- end -}}
-{{- end -}}
-
-{{/* Validate ClusterId value. It must be defined if Kraft mode is used.  */}}
-{{- define "kafka.validateValues.ClusterIdDefinedIfKraft" -}}
-{{- if and .Values.kraft.enabled (not .Values.kraft.clusterId) (gt (int .Values.replicaCount) 1) }}
-kafka: Kraft mode
-    .Values.kraft.clusterId must not be empty if .Values.kraft.enabled set to true and .Values.replicaCount > 1.
-{{- end -}}
-{{- end -}}
-
-{{/* Validate controllerQuorumVoters value. It must be defined if it is broker-only deployment.  */}}
-{{- define "kafka.validateValues.controllerQuorumVotersDefinedIfKraft" -}}
-{{- if and .Values.kraft.enabled (not .Values.kraft.controllerQuorumVoters) (not (contains "controller" .Values.kraft.processRoles)) }}
-kafka: Kraft mode
-    .Values.kraft.controllerQuorumVoters must not be empty if .Values.kraft.enabled set to true and .Values.kraft.processRoles does not contain "controller".
-    If you deploy brokers without controllers you have to define external controllers with .Values.kraft.controllerQuorumVoters
 {{- end -}}
 {{- end -}}
