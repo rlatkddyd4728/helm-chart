@@ -54,6 +54,7 @@ diagnosticMode:
   args:
     - infinity
 
+
 ## @section Kafka parameters
 
 ## Bitnami Kafka image version
