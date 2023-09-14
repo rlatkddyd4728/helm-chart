@@ -1,0 +1,11 @@
+# Default values for hpa.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+apache:
+  minReplicas: 1
+  maxReplicas: 10
+  cpu:
+    targetCPUUtilizationPercentage: 50
+  memory:
+    targetCPUUtilizationPercentage: 50
