@@ -22,7 +22,7 @@ spec:
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
           resources: 
-      {{ toYaml .Values.apache.resources | indent 12 }}
+{{ toYaml .Values.apache.resources | indent 12 }}
 
 
 
