@@ -17,23 +17,23 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.apache.cpu.targetCPUUtilizationPercentage }}
+          averageUtilization: {{ .Values.apache.cpu.targetCPUUtilizationPercentage }}  ## cpu 평균 사용률 기준으로 스케일링
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.apache.memory.targetMemoryUtilizationPercentage }}
-  behavior:
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      policies:
+          averageUtilization: {{ .Values.apache.memory.targetMemoryUtilizationPercentage }}  ## memory 평균 사용률 기준으로 스케일링
+  behavior:   ## 스케일링 정책
+    scaleDown:    ## pod 축소
+      stabilizationWindowSeconds: 300       ## 기본값 -> 메트릭이 대상을 스케일다운 해야 한다고 표시하면 5분 동안의 모든 대상을 고려하여 그 중 제일 높은 값을 스케일다운 (즉, 메트릭이 변할 때 마다, 스케일다운이 자주 일어나지 않도록 하기 위함) 
+      policies:     ## 60초당 1개의 Pod 축소
       - type: Pods
         value: 1
         periodSeconds: 60
-    scaleUp:
-      stabilizationWindowSeconds: 0
-      policies:
+    scaleUp:      ## pod 증가
+      stabilizationWindowSeconds: 0         ## 기본값 -> 메트릭이 대상을 스케일업 해야 한다고 표시하면 즉시 스케일업
+      policies:       ## 30초당 100% Pod 추가
       - type: Percent
         value: 100
         periodSeconds: 30
