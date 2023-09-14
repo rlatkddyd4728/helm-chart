@@ -8,4 +8,4 @@ apache:
   cpu:
     targetCPUUtilizationPercentage: 50
   memory:
-    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
