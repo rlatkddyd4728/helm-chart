@@ -21,13 +21,8 @@ spec:
             - name: http
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "50m"
-              memory: "64Mi"
+          resources: 
+      {{ toYaml .Values.apache.resources | indent 12 }}
 
 
 
