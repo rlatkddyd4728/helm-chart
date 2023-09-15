@@ -13,13 +13,13 @@ data:
         min_nodes: 1
         max_nodes: 3
         dry_mode: false
-        taint_upper_capacity_threshold_percent: 40
-        taint_lower_capacity_threshold_percent: 10
-        slow_node_removal_rate: 2
-        fast_node_removal_rate: 5
-        scale_up_threshold_percent: 70
-        scale_up_cool_down_period: 2m
-        scale_up_cool_down_timeout: 10m
+        taint_upper_capacity_threshold_percent: 70
+        taint_lower_capacity_threshold_percent: 70
+        slow_node_removal_rate: 1
+        fast_node_removal_rate: 1
+        scale_up_threshold_percent: 60
+        scale_up_cool_down_period: 1m
+        scale_up_cool_down_timeout: 5m
         soft_delete_grace_period: 1m
-        hard_delete_grace_period: 10m
+        hard_delete_grace_period: 5m
         taint_effect: "NoSchedule"
