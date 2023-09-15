@@ -13,7 +13,17 @@ spec:
     metadata:
       labels:
         app: test-app-1
-    spec:
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: mgmt-ng
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: eks.amazonaws.com/nodegroup
+            operator: In
+            values:
+            - mgmt-ng
       containers:
         - name: apache
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
