@@ -14,9 +14,9 @@ data:
         max_nodes: 3
         dry_mode: false
         taint_upper_capacity_threshold_percent: 70
-        taint_lower_capacity_threshold_percent: 60
+        taint_lower_capacity_threshold_percent: 70
         slow_node_removal_rate: 1
-        fast_node_removal_rate: 1
+        fast_node_removal_rate: 10
         scale_up_threshold_percent: 60
         scale_up_cool_down_period: 1m
         scale_up_cool_down_timeout: 5m
