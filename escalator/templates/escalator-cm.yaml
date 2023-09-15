@@ -13,8 +13,8 @@ data:
         min_nodes: 1
         max_nodes: 5
         dry_mode: false
-        taint_upper_capacity_threshold_percent: 60
-        taint_lower_capacity_threshold_percent: 60
+        taint_upper_capacity_threshold_percent: 40
+        taint_lower_capacity_threshold_percent: 10
         slow_node_removal_rate: 2
         fast_node_removal_rate: 5
         scale_up_threshold_percent: 70
