@@ -11,7 +11,7 @@ data:
         label_value: "mgmt-ng"
         cloud_provider_group_name: "eks-mgmt-ng-dcc54149-777d-2437-4008-48978169263b"
         min_nodes: 1
-        max_nodes: 30
+        max_nodes: 3
         dry_mode: false
         taint_upper_capacity_threshold_percent: 40
         taint_lower_capacity_threshold_percent: 10
