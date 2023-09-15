@@ -9,7 +9,7 @@ data:
       - name: "mgmt-ng"
         label_key: "eks.amazonaws.com/nodegroup"
         label_value: "mgmt-ng"
-        # cloud_provider_group_name: "eks-mgmt-ng-dcc54149-777d-2437-4008-48978169263b"
+        cloud_provider_group_name: "eks-mgmt-ng-dcc54149-777d-2437-4008-48978169263b"
         min_nodes: 1
         max_nodes: 30
         dry_mode: false
