@@ -36,7 +36,7 @@ spec:
 {{ toYaml .Values.apache.resources | indent 12 }}
           volumeMounts:
           - mountPath: /test
-            name: test-volumes
+            name: test-volume
       volumes:
       - name: test-volume
         hostPath:
