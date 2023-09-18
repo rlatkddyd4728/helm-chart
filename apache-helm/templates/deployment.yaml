@@ -46,6 +46,15 @@ spec:
               timeoutSeconds: 5
               successThreshold: 3
               failureThreshold: 5
+          readnessProbe:
+            httpGet:
+              path: /index.html
+              port: {{ .Values.containerPort }}
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              successThreshold: 3
+              failureThreshold: 5
       volumes:
       - name: test-volume
         hostPath:
