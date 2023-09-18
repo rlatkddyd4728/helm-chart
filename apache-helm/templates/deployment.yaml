@@ -48,7 +48,7 @@ spec:
               failureThreshold: 5
           readnessProbe:
             httpGet:
-              path: /index.html
+              path: /healthz.php
               port: {{ .Values.containerPort }}
               initialDelaySeconds: 30
               periodSeconds: 10
