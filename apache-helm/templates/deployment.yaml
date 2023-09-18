@@ -40,7 +40,7 @@ spec:
       volumes:
       - name: test-volume
         hostPath:
-          path: /tmp/test
+          path: /test
 
 
 
