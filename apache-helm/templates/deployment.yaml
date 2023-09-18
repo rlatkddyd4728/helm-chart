@@ -34,6 +34,14 @@ spec:
               protocol: TCP
           resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
+          volumeMounts:
+          name: test-volume
+          - mountPath: /test
+      volumes:
+      - name: test-volume
+        hostPath:
+          path: /test
+
 
 
 
