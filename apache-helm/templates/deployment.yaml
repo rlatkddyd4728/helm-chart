@@ -39,7 +39,7 @@ spec:
             name: test-volume
           livenessProbe:
             httpGet:
-              path: /index.html
+              path: /healthz.php
               port: {{ .Values.containerPort }}
               initialDelaySeconds: 30
               periodSeconds: 10
