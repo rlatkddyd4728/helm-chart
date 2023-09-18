@@ -38,7 +38,7 @@ spec:
           - mountPath: /test
             name: test-volume
       volumes:
-      - name: test-volume
+      - name: test-vm
         hostPath:
           path: /test
 
