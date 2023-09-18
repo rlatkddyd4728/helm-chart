@@ -37,6 +37,15 @@ spec:
           volumeMounts:
           - mountPath: /test
             name: test-volume
+          livenessProbe:
+            httpGet:
+              path: /var/www/html/index.html
+              port: {{ .Values.containerPort }}
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              successThreshold: 3
+              failureThreshold: 5
       volumes:
       - name: test-volume
         hostPath:
