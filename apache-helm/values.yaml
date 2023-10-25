@@ -7,7 +7,7 @@ image:
   repository: 827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/sy_kim_test
   # pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "20231025.080112"
+  tag: "20231025.080433"
 
 apache:
   resources:
