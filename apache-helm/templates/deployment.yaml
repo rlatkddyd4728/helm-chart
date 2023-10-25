@@ -58,7 +58,7 @@ spec:
               timeoutSeconds: 5
               periodSeconds: 10
               failureThreshold: 3
-          readnessProbe:
+          readinessProbe:
             httpGet:
               path: /healthz.php
               port: {{ .Values.containerPort }}
