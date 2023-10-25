@@ -13,7 +13,10 @@ spec:
 
 apiVersion: networking.k8s.io/v1 ## v1
 kind: Ingress ##Service
-metadata: 
+metadata:
+  name: apache-alb-1
+  # labels:
+  #   app: test-app-1
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -25,9 +28,6 @@ metadata:
     # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
     # service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
     # service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d          ## 퍼블릭 서브넷 지정
-  name: apache-alb-1
-  # labels:
-  #   app: test-app-1
 spec:
   # type: {{ .Values.service.type }}
   rules:
