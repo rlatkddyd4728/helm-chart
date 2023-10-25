@@ -13,10 +13,10 @@ metadata:
     # service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
     # service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d          ## 퍼블릭 서브넷 지정
   name: apache-alb-1
-  labels:
-    app: test-app-1
+  # labels:
+  #   app: test-app-1
 spec:
-  type: {{ .Values.service.type }}
+  # type: {{ .Values.service.type }}
   rules:
     - http:
         paths:
