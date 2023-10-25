@@ -1,20 +1,33 @@
 apiVersion: v1
-kind: Service
+kind: Ingress ##Service
 metadata: 
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d          ## 퍼블릭 서브넷 지정
-  name: apache-nlb-1
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d 
+    alb.ingress.kubernetes.io/security-groups: sg-0ac39a8cc3edfcd28
+    # service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
+    # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
+    # service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
+    # service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d          ## 퍼블릭 서브넷 지정
+  name: apache-alb-1
   labels:
     app: test-app-1
 spec:
   type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.containerPort }}
-      protocol: TCP
-      name: http
-  selector:
-    app: test-app-1
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: apache
+              servicePort: {{ .Values.service.port }} 
+  # ports:
+  #   - port: {{ .Values.service.port }}
+  #     targetPort: {{ .Values.containerPort }}
+  #     protocol: TCP
+  #     name: http
+  # selector:
+  #   app: test-app-1
