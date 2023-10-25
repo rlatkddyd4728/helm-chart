@@ -11,7 +11,7 @@ spec:
     targetPort: {{ .Values.containerPort }}
   type: NodePort
 
-apiVersion: networking.k8s.io/v1 ## v1
+apiVersion: extensions/v1 ## networking.k8s.io/v1 ## v1
 kind: Ingress ##Service
 metadata: 
   annotations:
@@ -34,9 +34,14 @@ spec:
     - http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: apache-alb-service
-              servicePort: {{ .Values.service.port }} 
+              service:
+                name: apache-alb-service
+                port:
+                  number: {{ .Values.service.port }} 
+              # serviceName: apache-alb-service
+              # servicePort: {{ .Values.service.port }} 
   # ports:
   #   - port: {{ .Values.service.port }}
   #     targetPort: {{ .Values.containerPort }}
