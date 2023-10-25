@@ -6,9 +6,10 @@ spec:
   selector:
     app: test-app-1
   ports:
-    - protocol: TCP
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.containerPort }}
+  - protocol: TCP
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.containerPort }}
+  type: NodePort
 
 apiVersion: extensions/v1beta1 ## v1
 kind: Ingress ##Service
