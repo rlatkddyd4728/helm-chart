@@ -9,6 +9,11 @@ spec:
   selector:
     matchLabels:
       app: test-app-1
+  strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 2
+        maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -48,14 +53,14 @@ spec:
             httpGet:
               path: /healthz.php
               port: {{ .Values.containerPort }}
-              initialDelaySeconds: 30
+              timeoutSecond: 5
               periodSeconds: 10
               failureThreshold: 3
           readnessProbe:
             httpGet:
               path: /healthz.php
               port: {{ .Values.containerPort }}
-              initialDelaySeconds: 30
+              timeoutSecond: 5
               periodSeconds: 10
               failureThreshold: 3
       volumes:
