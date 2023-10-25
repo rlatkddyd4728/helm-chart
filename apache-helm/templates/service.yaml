@@ -1,8 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-alb-service
+spec:
+  selector:
+    app: test-app-1
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.containerPort }}
+
 apiVersion: extensions/v1beta1 ## v1
 kind: Ingress ##Service
 metadata: 
   annotations:
-    # kubernetes.io/ingress.class: alb
+    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
@@ -22,7 +34,7 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: apache
+              serviceName: apache-alb-service
               servicePort: {{ .Values.service.port }} 
   # ports:
   #   - port: {{ .Values.service.port }}
