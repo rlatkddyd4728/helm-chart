@@ -5,7 +5,7 @@ replicaCount: 2
 
 image:
   repository: 827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/sy_kim_test
-  test_tag: "20231026.063748"
+  test_tag: nv_dev_front-20231110.175241
 
 apache:
   resources:
