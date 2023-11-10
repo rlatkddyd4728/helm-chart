@@ -32,7 +32,7 @@ spec:
       #           - mgmt
       containers:
         - name: apache
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag | default .Chart.AppVersion }}"
           ports:
             - name: http
               containerPort: {{ .Values.containerPort }}
