@@ -46,30 +46,30 @@ spec:
           volumeMounts:
           - mountPath: /test
             name: test-volume
-          startupProbe:
-            httpGet:
-              path: /healthz.php
-              port: {{ .Values.containerPort }}
-              initialDelaySeconds: 30
-              timeoutSeconds: 5
-              periodSeconds: 10
-              failureThreshold: 30
-          livenessProbe:
-            httpGet:
-              path: /healthz.php
-              port: {{ .Values.containerPort }}
-              initialDelaySeconds: 30
-              timeoutSeconds: 5
-              periodSeconds: 10
-              failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /healthz.php
-              port: {{ .Values.containerPort }}
-              initialDelaySeconds: 30
-              timeoutSeconds: 5
-              periodSeconds: 10
-              failureThreshold: 3
+          # startupProbe:
+          #   httpGet:
+          #     path: /healthz.php
+          #     port: {{ .Values.containerPort }}
+          #     initialDelaySeconds: 30
+          #     timeoutSeconds: 5
+          #     periodSeconds: 10
+          #     failureThreshold: 30
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthz.php
+          #     port: {{ .Values.containerPort }}
+          #     initialDelaySeconds: 30
+          #     timeoutSeconds: 5
+          #     periodSeconds: 10
+          #     failureThreshold: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /healthz.php
+          #     port: {{ .Values.containerPort }}
+          #     initialDelaySeconds: 30
+          #     timeoutSeconds: 5
+          #     periodSeconds: 10
+          #     failureThreshold: 3
       volumes:
       - name: test-volume
         hostPath:
