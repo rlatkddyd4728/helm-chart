@@ -5,7 +5,7 @@ replicaCount: 2
 
 image:
   repository: 827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/nv_dev_front
-  test_tag: nv_dev_front-20231113.153354
+  test_tag: nv_dev_front-20231113.083517
 
 apache:
   resources:
