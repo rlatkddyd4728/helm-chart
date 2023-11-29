@@ -50,8 +50,8 @@ spec:
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
         volumeMounts:
-        - mountPath: /test
-          name: volume
+        - name: volume
+          mountPath: /test
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
