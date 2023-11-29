@@ -36,45 +36,45 @@ spec:
       #           values:
       #           - game
       containers:
-        - name: apache
-          image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag | default .Chart.AppVersion }}"
-          ports:
-            - name: http
-              containerPort: {{ .Values.containerPort }}
-              protocol: TCP
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/sh", "-c", "sleep 60"]
-          resources: 
+      - name: apache
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag | default .Chart.AppVersion }}"
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 60"]
+        resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
-          volumeMounts:
-          - mountPath: /test
-            name: volume
-          # startupProbe:
-          #   httpGet:
-          #     path: /healthz.php
-          #     port: {{ .Values.containerPort }}
-          #     initialDelaySeconds: 30
-          #     timeoutSeconds: 5
-          #     periodSeconds: 10
-          #     failureThreshold: 30
-          # livenessProbe:
-          #   httpGet:
-          #     path: /healthz.php
-          #     port: {{ .Values.containerPort }}
-          #     initialDelaySeconds: 30
-          #     timeoutSeconds: 5
-          #     periodSeconds: 10
-          #     failureThreshold: 3
-          # readinessProbe:
-          #   httpGet:
-          #     path: /healthz.php
-          #     port: {{ .Values.containerPort }}
-          #     initialDelaySeconds: 30
-          #     timeoutSeconds: 5
-          #     periodSeconds: 10
-          #     failureThreshold: 3
+        volumeMounts:
+        - mountPath: /test
+          name: volume
+        # startupProbe:
+        #   httpGet:
+        #     path: /healthz.php
+        #     port: {{ .Values.containerPort }}
+        #     initialDelaySeconds: 30
+        #     timeoutSeconds: 5
+        #     periodSeconds: 10
+        #     failureThreshold: 30
+        # livenessProbe:
+        #   httpGet:
+        #     path: /healthz.php
+        #     port: {{ .Values.containerPort }}
+        #     initialDelaySeconds: 30
+        #     timeoutSeconds: 5
+        #     periodSeconds: 10
+        #     failureThreshold: 3
+        # readinessProbe:
+        #   httpGet:
+        #     path: /healthz.php
+        #     port: {{ .Values.containerPort }}
+        #     initialDelaySeconds: 30
+        #     timeoutSeconds: 5
+        #     periodSeconds: 10
+        #     failureThreshold: 3
       volumes:
       - name: volume
         hostPath:
