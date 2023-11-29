@@ -50,8 +50,8 @@ spec:
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
         volumeMounts:
-        - name: volume
-          mountPath: /test
+        # - name: volume
+        #   mountPath: /test
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
@@ -80,9 +80,9 @@ spec:
         #     periodSeconds: 10
         #     failureThreshold: 3
       volumes:
-      - name: volume
-        hostPath:
-          path: /test
+      # - name: volume
+      #   hostPath:
+      #     path: /test
       - name: secrets-store-inline			
         csi:
           driver: secrets-store.csi.k8s.io
