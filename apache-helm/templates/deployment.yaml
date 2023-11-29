@@ -19,7 +19,7 @@ spec:
       labels:
         Tier: app
     spec:
-      serviceAccountName: test-secret-sa 		## 위에서 생성한 iamserviceaccont 이름
+      serviceAccountName: test-secret-sa 	
       nodeSelector:
         eks.amazonaws.com/nodegroup: game
       tolerations:
@@ -88,7 +88,7 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: test-secret-provider # 위에서 생성한 secret provider 이름
+            secretProviderClass: test-secret-provider 
 
 
 
