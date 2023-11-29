@@ -53,7 +53,7 @@ spec:
         # - name: volume
         #   mountPath: /test
         - name: secrets-store-inline
-          mountPath: "/mnt/secrets-store"
+          mountPath: /mnt/secrets-store
           readOnly: true
         # startupProbe:
         #   httpGet:
@@ -88,7 +88,7 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: "test-secret-provider" # 위에서 생성한 secret provider 이름
+            secretProviderClass: test-secret-provider # 위에서 생성한 secret provider 이름
 
 
 
