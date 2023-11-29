@@ -84,7 +84,6 @@ spec:
       - name: volume
         hostPath:
           path: /test
-      volumes: # 볼륨 정의
       - name: secrets-store-inline			
         csi:
           driver: secrets-store.csi.k8s.io
