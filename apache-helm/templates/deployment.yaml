@@ -50,11 +50,11 @@ spec:
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
         volumeMounts:
-        # - name: volume
-        #   mountPath: /test
         - name: secrets-store-inline
           mountPath: /mnt/secrets-store
           readOnly: true
+        # - name: volume
+        #   mountPath: /test
         # startupProbe:
         #   httpGet:
         #     path: /healthz.php
@@ -80,15 +80,15 @@ spec:
         #     periodSeconds: 10
         #     failureThreshold: 3
       volumes:
-      # - name: volume
-      #   hostPath:
-      #     path: /test
       - name: secrets-store-inline			
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
             secretProviderClass: test-secret-provider 
+      # - name: volume
+      #   hostPath:
+      #     path: /test
 
 
 
