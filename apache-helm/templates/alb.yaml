@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1 ## v1
 kind: Ingress ##Service
 metadata:
-  name: apache-alb-1
+  name: apache-ingress
   # labels:
   #   app: test-app-1
   annotations:

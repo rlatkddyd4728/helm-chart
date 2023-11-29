@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apache-deploy-1
+  name: apache-deploy
   labels:
-    app: test-app-1
+    Tier: app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: test-app-1
+      Tier: app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,10 +17,15 @@ spec:
   template:
     metadata:
       labels:
-        app: test-app-1
+        Tier: app
     spec:
       nodeSelector:
-        eks.amazonaws.com/nodegroup: mgmt
+        eks.amazonaws.com/nodegroup: game
+      tolerations:
+      - key: role
+        operator: Equal
+        value: game
+        effect: NoSchedule
       # affinity:
       #   nodeAffinity:
       #     requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,7 +34,7 @@ spec:
       #         - key: eks.amazonaws.com/nodegroup
       #           operator: In
       #           values:
-      #           - mgmt
+      #           - game
       containers:
         - name: apache
           image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag | default .Chart.AppVersion }}"
@@ -45,7 +50,7 @@ spec:
 {{ toYaml .Values.apache.resources | indent 12 }}
           volumeMounts:
           - mountPath: /test
-            name: test-volume
+            name: volume
           # startupProbe:
           #   httpGet:
           #     path: /healthz.php
@@ -71,7 +76,7 @@ spec:
           #     periodSeconds: 10
           #     failureThreshold: 3
       volumes:
-      - name: test-volume
+      - name: volume
         hostPath:
           path: /test
 
