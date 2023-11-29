@@ -52,7 +52,6 @@ spec:
         volumeMounts:
         - mountPath: /test
           name: volume
-        volumeMounts: # 마운트 path 정의
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
