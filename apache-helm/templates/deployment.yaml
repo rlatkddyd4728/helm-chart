@@ -49,10 +49,10 @@ spec:
               command: ["/bin/sh", "-c", "sleep 60"]
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
-        # volumeMounts:
-        # - name: secrets-store-inline
-        #   mountPath: /mnt/secrets-store
-        #   readOnly: true
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: /mnt/secrets-store
+          readOnly: true
         # - name: volume
         #   mountPath: /test
         # startupProbe:
@@ -78,7 +78,15 @@ spec:
         #     initialDelaySeconds: 30
         #     timeoutSeconds: 5
         #     periodSeconds: 10
-        #     failureThreshold: 3
-
+      volumes:
+      - name: secrets-store-inline			
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: test-secret-provider 
+      # - name: volume
+      #   hostPath:
+      #     path: /test
 
 
