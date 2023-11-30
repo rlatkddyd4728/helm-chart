@@ -49,6 +49,9 @@ spec:
               command: ["/bin/sh", "-c", "sleep 60"]
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
+        envFrom:
+        - secretRef:
+            name: test-secret # secret provider에서 설정한 시크릿 이름
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
@@ -79,12 +82,12 @@ spec:
         #     timeoutSeconds: 5
         #     periodSeconds: 10
       volumes:
-      - name: secrets-store-inline			
+      - name: secrets-store-inline
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: test-secret-provider 
+            secretProviderClass: test-secret-provider
       # - name: volume
       #   hostPath:
       #     path: /test
