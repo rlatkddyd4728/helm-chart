@@ -49,9 +49,9 @@ spec:
               command: ["/bin/sh", "-c", "sleep 60"]
         resources: 
 {{ toYaml .Values.apache.resources | indent 12 }}
-        envFrom:
-        - secretRef:
-            name: test-secret # secret provider에서 설정한 시크릿 이름
+        # envFrom:
+        # - secretRef:
+        #     name: test-secret # secret provider에서 설정한 시크릿 이름
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
