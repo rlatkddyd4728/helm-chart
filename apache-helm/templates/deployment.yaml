@@ -38,7 +38,7 @@ spec:
       #           - game
       containers:
       - name: apache
-        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag | default .Chart.AppVersion }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
