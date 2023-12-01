@@ -27,6 +27,10 @@ spec:
         operator: Equal
         value: game
         effect: NoSchedule
+      - key: role
+        operator: Equal
+        value: front
+        effect: NoSchedule
       # affinity:
       #   nodeAffinity:
       #     requiredDuringSchedulingIgnoredDuringExecution:
