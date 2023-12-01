@@ -86,17 +86,12 @@ spec:
           hostPath:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
+{{- range .Values.nodegroup }}
       nodeSelector:
-        eks.amazonaws.com/nodegroup: game
-        eks.amazonaws.com/nodegroup: front
+        eks.amazonaws.com/nodegroup: {{ $nodegroup }}
       tolerations:
       - key: role
         operator: Equal
-        value: game
-        effect: NoSchedule
-      - key: role
-        operator: Equal
-        value: front
+        value: {{ $nodegroup }}
         effect: NoSchedule    
-
-
+{{- end }}
