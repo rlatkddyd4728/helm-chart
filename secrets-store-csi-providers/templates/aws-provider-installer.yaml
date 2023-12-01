@@ -86,10 +86,18 @@ spec:
           hostPath:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
-      tolerations:
 {{- range .Values.nodegroup }}
+      tolerations:
       - key: role
         operator: Equal
         value: {{ . }}
         effect: NoSchedule    
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: eks.amazonaws.com/nodegroup
+                operator: In
+                values: {{ . }}
 {{- end }}
