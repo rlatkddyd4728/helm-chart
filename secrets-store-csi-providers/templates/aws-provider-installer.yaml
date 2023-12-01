@@ -101,5 +101,6 @@ spec:
 {{- range .Values.nodegroup }}
               - key: eks.amazonaws.com/nodegroup
                 operator: In
-                values: {{ . }}
+                values: 
+                  - {{ . }}
 {{- end }}
