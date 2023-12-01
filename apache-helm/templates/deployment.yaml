@@ -20,13 +20,13 @@ spec:
         Tier: app
     spec:
       serviceAccountName: test-secret-sa 	
-      nodeSelector:
-        eks.amazonaws.com/nodegroup: game
-      # tolerations:
-      # - key: role
-      #   operator: Equal
-      #   value: game
-      #   effect: NoSchedule
+      # nodeSelector:
+      #   eks.amazonaws.com/nodegroup: game
+      tolerations:
+      - key: role
+        operator: Equal
+        value: game
+        effect: NoSchedule
       # affinity:
       #   nodeAffinity:
       #     requiredDuringSchedulingIgnoredDuringExecution:
