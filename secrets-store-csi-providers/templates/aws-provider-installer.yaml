@@ -88,10 +88,10 @@ spec:
             type: DirectoryOrCreate
 {{- range .Values.nodegroup }}
       nodeSelector:
-        eks.amazonaws.com/nodegroup: {{ $nodegroup }}
+        eks.amazonaws.com/nodegroup: {{ . }}
       tolerations:
       - key: role
         operator: Equal
-        value: {{ $nodegroup }}
+        value: {{ . }}
         effect: NoSchedule    
 {{- end }}
