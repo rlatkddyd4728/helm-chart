@@ -22,20 +22,21 @@ spec:
       serviceAccountName: test-secret-sa 	
       # nodeSelector:
       #   eks.amazonaws.com/nodegroup: game
-      tolerations:
-      - key: role
-        operator: Equal
-        value: game
-        effect: NoSchedule
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: eks.amazonaws.com/nodegroup
-      #           operator: In
-      #           values:
-      #           - game
+      # tolerations:
+      # - key: role
+      #   operator: Equal
+      #   value: game
+      #   effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: eks.amazonaws.com/nodegroup
+                operator: In
+                values:
+                - game
+                - front
       containers:
       - name: apache
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
