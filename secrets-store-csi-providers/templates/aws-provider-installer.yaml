@@ -86,8 +86,15 @@ spec:
           hostPath:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
+{{- range .Values.nodegroup }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
-      tolerations:      
-{{ toYaml .Values.tolerations | indent 8 }}
+        eks.amazonaws.com/nodegroup: {{ . }}
+## {{ toYaml .Values.nodeSelector | indent 8 }}\
+      tolerations:
+      - key: role
+        operator: Equal
+        value: {{ . }}
+        effect: NoSchedule    
+{{- end}}
+##{{ toYaml .Values.tolerations | indent 8 }}
 
