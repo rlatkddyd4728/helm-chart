@@ -86,10 +86,6 @@ spec:
           hostPath:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
-      nodeSelector:
-{{- range .Values.nodegroup }}
-        eks.amazonaws.com/nodegroup: {{ . }}
-{{- end }}
       tolerations:
 {{- range .Values.nodegroup }}
       - key: role
