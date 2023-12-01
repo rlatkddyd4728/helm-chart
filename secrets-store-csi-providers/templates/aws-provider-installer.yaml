@@ -94,11 +94,11 @@ spec:
         effect: NoSchedule
 {{- end }}    
       affinity:
-{{- range .Values.nodegroup }}
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
+{{- range .Values.nodegroup }}
               - key: eks.amazonaws.com/nodegroup
                 operator: In
                 values: 
