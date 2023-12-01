@@ -1,8 +1,8 @@
-game:
-  tolerations:
-    - key: role
-      operator: Equal
-      value: game
-      effect: NoSchedule
-  nodeSelector:
+tolerations:
+  - key: role
+    operator: Equal
+    value: game
+    effect: NoSchedule
+
+nodeSelector:
     eks.amazonaws.com/nodegroup: game

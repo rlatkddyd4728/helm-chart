@@ -87,6 +87,7 @@ spec:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
       nodeSelector:
-{{ toYaml .Values.game.nodeSelector | indent 8 }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
       tolerations:      
-{{ toYaml .Values.game.tolerations | indent 8 }}
+{{ toYaml .Values.tolerations | indent 8 }}
+
