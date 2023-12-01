@@ -89,12 +89,9 @@ spec:
 {{- range .Values.nodegroup }}
       nodeSelector:
         eks.amazonaws.com/nodegroup: {{ . }}
-## {{ toYaml .Values.nodeSelector | indent 8 }}\
       tolerations:
       - key: role
         operator: Equal
         value: {{ . }}
         effect: NoSchedule    
 {{- end}}
-##{{ toYaml .Values.tolerations | indent 8 }}
-
