@@ -88,6 +88,7 @@ spec:
             type: DirectoryOrCreate
       nodeSelector:
         eks.amazonaws.com/nodegroup: game
+      nodeSelector:
         eks.amazonaws.com/nodegroup: front
       tolerations:
       - key: role
