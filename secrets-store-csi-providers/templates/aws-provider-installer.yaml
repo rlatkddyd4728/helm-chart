@@ -97,10 +97,10 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
+{{- range .Values.nodegroup }}
             - matchExpressions:
               - key: eks.amazonaws.com/nodegroup
                 operator: In
-{{- range .Values.nodegroup }}
                 values: 
                   - {{ . }}
 {{- end }}
