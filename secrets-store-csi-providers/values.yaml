@@ -1,0 +1,6 @@
+tolerations:
+  game:
+  - key: role
+    operator: Equal
+    value: game
+    effect: NoSchedule
