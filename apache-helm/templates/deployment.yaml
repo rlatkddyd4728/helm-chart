@@ -20,8 +20,8 @@ spec:
         Tier: app
     spec:
       serviceAccountName: test-secret-sa 	
-      # nodeSelector:
-      #   eks.amazonaws.com/nodegroup: game
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: game
       tolerations:
       - key: role
         operator: Equal
