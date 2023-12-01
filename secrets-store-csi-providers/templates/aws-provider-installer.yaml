@@ -100,7 +100,6 @@ spec:
             - matchExpressions:
               - key: eks.amazonaws.com/nodegroup
                 operator: In
-                values: 
-                  - game
-                  - front
-
+{{- range .Values.nodegroup }}
+                values: {{ . }}
+{{- end }}
