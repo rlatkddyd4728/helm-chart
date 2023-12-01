@@ -94,4 +94,4 @@ spec:
         operator: Equal
         value: {{ . }}
         effect: NoSchedule    
-{{- end}}
+{{- end }}
