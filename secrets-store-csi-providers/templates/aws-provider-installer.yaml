@@ -87,6 +87,6 @@ spec:
             path: /var/lib/kubelet/pods
             type: DirectoryOrCreate
       nodeSelector:
-        eks.amazonaws.com/nodegroup: {{ .Values.tolerations.game.value }}
-      tolerations:
-{{ toYaml .Values.tolerations.game | indent 12 }}
+{{ toYaml .Values.game.nodeSelector | indent 4 }}
+      tolerations:        
+{{ toYaml .Values.game.tolerations | indent 4 }}
