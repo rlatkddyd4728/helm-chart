@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apache-deploy
+  name: test-deploy
+  namespace: test
   labels:
     Tier: app
 spec:
@@ -19,14 +20,14 @@ spec:
       labels:
         Tier: app
     spec:
-      serviceAccountName: test-secret-sa 	
-      nodeSelector:
-        eks.amazonaws.com/nodegroup: game
-      tolerations:
-      - key: role
-        operator: Equal
-        value: game
-        effect: NoSchedule
+      serviceAccountName: test-sa	
+      # nodeSelector:
+      #   eks.amazonaws.com/nodegroup: game
+      # tolerations:
+      # - key: role
+      #   operator: Equal
+      #   value: game
+      #   effect: NoSchedule
       # affinity:
       #   nodeAffinity:
       #     requiredDuringSchedulingIgnoredDuringExecution:
@@ -37,25 +38,26 @@ spec:
       #           values:
       #           - game
       containers:
-      - name: apache
-        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
-        ports:
-        - name: http
-          containerPort: {{ .Values.containerPort }}
-          protocol: TCP
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "sleep 60"]
-        resources: 
-{{ toYaml .Values.apache.resources | indent 12 }}
-        envFrom:
-        - secretRef:
-            name: test-secret # secret provider에서 설정한 시크릿 이름
-        volumeMounts:
-        - name: secrets-store-inline
-          mountPath: "/mnt/secrets-store"
-          readOnly: true
+      - name: test
+        # image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
+        image: amazon/aws-cli
+        # ports:
+        # - name: http
+        #   containerPort: {{ .Values.containerPort }}
+        #   protocol: TCP
+        # lifecycle:
+        #   preStop:
+        #     exec:
+        #       command: ["/bin/sh", "-c", "sleep 60"]
+#         resources: 
+# {{ toYaml .Values.apache.resources | indent 12 }}
+        # envFrom:
+        # - secretRef:
+        #     name: test-secret # secret provider에서 설정한 시크릿 이름
+        # volumeMounts:
+        # - name: secrets-store-inline
+        #   mountPath: "/mnt/secrets-store"
+        #   readOnly: true
         # - name: volume
         #   mountPath: /test
         # startupProbe:
@@ -81,13 +83,13 @@ spec:
         #     initialDelaySeconds: 30
         #     timeoutSeconds: 5
         #     periodSeconds: 10
-      volumes:
-      - name: secrets-store-inline
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: test-secret-provider
+      # volumes:
+      # - name: secrets-store-inline
+      #   csi:
+      #     driver: secrets-store.csi.k8s.io
+      #     readOnly: true
+      #     volumeAttributes:
+      #       secretProviderClass: test-secret-provider
       # - name: volume
       #   hostPath:
       #     path: /test
