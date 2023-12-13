@@ -41,6 +41,7 @@ spec:
       - name: test
         # image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
         image: amazon/aws-cli
+        imagePullPolicy: IfNotPresent
         # ports:
         # - name: http
         #   containerPort: {{ .Values.containerPort }}
