@@ -23,7 +23,7 @@ spec:
       serviceAccountName: test-sa	
       containers:
       - name: test
-        image: amazon/aws-cli
+        image: amazon/aws-cli:latest
         command:
           - sleep
           - "3600"
