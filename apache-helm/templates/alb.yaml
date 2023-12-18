@@ -11,6 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     alb.ingress.kubernetes.io/subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d 
     alb.ingress.kubernetes.io/security-groups: sg-0ac39a8cc3edfcd28
+    alb.ingress.kubernetes.io/load-balancer-attributes: deletion_protection.enabled=false
     # service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
     # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
     # service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
