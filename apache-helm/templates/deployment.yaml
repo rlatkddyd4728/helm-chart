@@ -39,13 +39,12 @@ spec:
       #           - game
       containers:
       - name: test
-        # image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
-        image: amazon/aws-cli
-        imagePullPolicy: IfNotPresent
-        # ports:
-        # - name: http
-        #   containerPort: {{ .Values.containerPort }}
-        #   protocol: TCP
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
         # lifecycle:
         #   preStop:
         #     exec:
