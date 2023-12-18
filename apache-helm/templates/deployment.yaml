@@ -38,6 +38,6 @@ spec:
           name: test-config
           items:
           - key: username
-            path: user
+            path: test/user
 
 
