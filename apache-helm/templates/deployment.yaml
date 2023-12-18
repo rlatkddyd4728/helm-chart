@@ -30,11 +30,11 @@ spec:
         - name: config
           mountPath: "/config"
           readOnly: true
-    volumes:
-    # You set volumes at the Pod level, then mount them into containers inside that Pod
-    - name: config
-      configMap:
-        # Provide the name of the ConfigMap you want to mount.
-        name: test-config
+      volumes:
+      # You set volumes at the Pod level, then mount them into containers inside that Pod
+      - name: config
+        configMap:
+          # Provide the name of the ConfigMap you want to mount.
+          name: test-config
 
 
