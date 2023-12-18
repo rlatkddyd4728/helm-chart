@@ -10,32 +10,11 @@ spec:
   selector:
     matchLabels:
       Tier: app
-  # strategy:
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxSurge: 1
-  #     maxUnavailable: 0
   template:
     metadata:
       labels:
         Tier: app
     spec:
-      # nodeSelector:
-      #   eks.amazonaws.com/nodegroup: game
-      # tolerations:
-      # - key: role
-      #   operator: Equal
-      #   value: game
-      #   effect: NoSchedule
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: eks.amazonaws.com/nodegroup
-      #           operator: In
-      #           values:
-      #           - game
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
@@ -44,35 +23,7 @@ spec:
         - name: http
           containerPort: {{ .Values.containerPort }}
           protocol: TCP
-        # lifecycle:
-        #   preStop:
-        #     exec:
-        #       command: ["/bin/sh", "-c", "sleep 60"]
-#         resources: 
-# {{ toYaml .Values.apache.resources | indent 12 }}
-        # startupProbe:
-        #   httpGet:
-        #     path: /healthz.php
-        #     port: {{ .Values.containerPort }}
-        #     initialDelaySeconds: 30
-        #     timeoutSeconds: 5
-        #     periodSeconds: 10
-        #     failureThreshold: 30
-        # livenessProbe:
-        #   httpGet:
-        #     path: /healthz.php
-        #     port: {{ .Values.containerPort }}
-        #     initialDelaySeconds: 30
-        #     timeoutSeconds: 5
-        #     periodSeconds: 10
-        #     failureThreshold: 3
-        # readinessProbe:
-        #   httpGet:
-        #     path: /healthz.php
-        #     port: {{ .Values.containerPort }}
-        #     initialDelaySeconds: 30
-        #     timeoutSeconds: 5
-        #     periodSeconds: 10
+
 
 
 
