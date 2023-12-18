@@ -6,3 +6,6 @@ metadata:
 data:
   username: test
   password: test
+  keys: | 
+    test=11 
+    testv2=22
