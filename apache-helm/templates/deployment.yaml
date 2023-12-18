@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         Tier: app
-    spec:	
+    spec:
       # nodeSelector:
       #   eks.amazonaws.com/nodegroup: game
       # tolerations:
