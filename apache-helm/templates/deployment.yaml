@@ -20,7 +20,7 @@ spec:
       labels:
         Tier: app
     spec:
-      serviceAccountName: test-sa	
+      # serviceAccountName: test-sa	
       # nodeSelector:
       #   eks.amazonaws.com/nodegroup: game
       # tolerations:
