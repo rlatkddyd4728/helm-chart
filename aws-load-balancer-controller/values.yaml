@@ -11,7 +11,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "aws-load-balancer-controller"
 
 serviceAccount:
   # Specifies whether a service account should be created
