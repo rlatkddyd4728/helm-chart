@@ -5,7 +5,7 @@ metadata:
 subjects:
 - kind: Group
   name: test
-  apiGroup: rbac.authorization.k8s.io
+  namespace: test
 roleRef:
   kind: Role
   name: role
