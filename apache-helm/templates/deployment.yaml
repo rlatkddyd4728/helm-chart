@@ -7,7 +7,6 @@ metadata:
     Tier: app
 spec:
   replicas: {{ .Values.replicaCount }}
-  serviceAccountName: test
   selector:
     matchLabels:
       Tier: app
@@ -16,6 +15,7 @@ spec:
       labels:
         Tier: app
     spec:
+      serviceAccountName: test
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
