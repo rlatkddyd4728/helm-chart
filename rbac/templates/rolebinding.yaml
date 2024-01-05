@@ -3,7 +3,7 @@ kind: RoleBinding
 metadata:
   name: rolebinding
 subjects:
-- kind: Group
+- kind: ServiceAccount
   name: test
   namespace: test
 roleRef:
