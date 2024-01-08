@@ -15,7 +15,7 @@ spec:
       labels:
         Tier: app
     spec:
-      serviceAccountName: test
+      # serviceAccountName: test
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
