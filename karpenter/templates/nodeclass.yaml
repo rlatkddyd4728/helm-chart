@@ -1,12 +1,14 @@
-apiVersion: karpenter.k8s.aws/v1alpha1
-kind: AWSNodeTemplate
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
 metadata:
-  name: game-template
+  name: game-nodeclass
 spec:
-  subnetSelector:
-    karpenter.sh/discovery: sy-kim-eks-cluster
-  securityGroupSelector:
-    karpenter.sh/discovery: sy-kim-eks-cluster
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: "sy-kim-eks-cluster"
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: "sy-kim-eks-cluster"
   amiFamily: AL2
   blockDeviceMappings:
     - deviceName: /dev/xvda
@@ -15,7 +17,7 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
-  instanceProfile: sy_kim-KarpenterNodeInstanceProfile
+  role: "sy_kim-KarpenterNodeRole"
   userData:  |
     MIME-Version: 1.0
     Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
