@@ -16,7 +16,8 @@ spec:
         Tier: app
     spec:
       nodeSelector:
-        eks.amazonaws.com/nodegroup: game
+        tier: nodepool
+        role: game
       tolerations:
       - key: ng
         operator: Equal
