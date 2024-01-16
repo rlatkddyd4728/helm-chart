@@ -4,16 +4,17 @@ metadata:
   name: game-nodepool
 spec:
   template:
-    spec: 
+    metadata:
+      labels:
+        tier: nodepool
+        role: game
+    spec:
       nodeClassRef:
         name: game-nodeclass
       taints:
         - key: ng
           value: game
           effect: NoSchedule
-      labels:
-        tier: Provisioner
-        role: game
       requirements:
         - key: node.kubernetes.io/instance-type
           operator: In
