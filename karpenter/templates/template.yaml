@@ -1,0 +1,9 @@
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: game-template
+spec:
+  subnetSelector:
+    karpenter.sh/discovery: sy-kim-eks-cluster
+  securityGroupSelector:
+    karpenter.sh/discovery: sy-kim-eks-cluster
