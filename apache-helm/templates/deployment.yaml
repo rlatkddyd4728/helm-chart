@@ -16,7 +16,7 @@ spec:
         Tier: app
     spec:
       nodeSelector:
-        tier: nodepool
+        tier: ng
         role: game
       tolerations:
       - key: ng
