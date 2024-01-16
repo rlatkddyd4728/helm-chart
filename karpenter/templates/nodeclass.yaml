@@ -78,3 +78,5 @@ spec:
         sed -i '/"imageGCHigh*/a \ \ "imageGCLowThresholdPercent": 50,' /etc/kubernetes/kubelet/kubelet-config.json
     fi
     --==MYBOUNDARY==-- 
+status:
+  instanceProfile: "sy_kim-KarpenterNodeInstanceProfile"
