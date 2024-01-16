@@ -1,7 +1,7 @@
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: game
+  name: game-provisioner
 spec:
   providerRef:
     name: game-template
@@ -31,8 +31,8 @@ spec:
 
   # Enables consolidation which attempts to reduce cluster cost by both removing un-needed nodes and down-sizing those
   # that can't be removed.  Mutually exclusive with the ttlSecondsAfterEmpty parameter.
-  consolidation:
-    enabled: true
+  # consolidation:
+  #   enabled: true
 
   # If omitted, the feature is disabled and nodes will never expire.  If set to less time than it requires for a node
   # to become ready, the node may expire before any pods successfully start.
