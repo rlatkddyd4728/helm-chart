@@ -1,7 +1,7 @@
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
 metadata:
-  name: game-nodepool
+  name: game
 spec:
   template:
     metadata:
@@ -44,5 +44,5 @@ spec:
     # The amount of time Karpenter should wait after discovering a consolidation decision
     # This value can currently only be set when the consolidationPolicy is 'WhenEmpty'
     # You can choose to disable consolidation entirely by setting the string value 'Never' here
-    consolidateAfter: 30s
+    consolidateAfter: 60s
     
