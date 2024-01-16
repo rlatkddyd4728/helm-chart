@@ -17,7 +17,7 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
-  role: "sy_kim-KarpenterNodeRole"
+  instanceProfile: "sy_kim-KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
     Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
@@ -78,5 +78,3 @@ spec:
         sed -i '/"imageGCHigh*/a \ \ "imageGCLowThresholdPercent": 50,' /etc/kubernetes/kubelet/kubelet-config.json
     fi
     --==MYBOUNDARY==-- 
-status:
-  instanceProfile: "sy_kim-KarpenterNodeInstanceProfile"
