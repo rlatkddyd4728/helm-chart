@@ -32,14 +32,17 @@ spec:
           operator: In
           values: ["amd64"]
 
-      # Enables consolidation which attempts to reduce cluster cost by both removing un-needed nodes and down-sizing those
-      # that can't be removed.  Mutually exclusive with the ttlSecondsAfterEmpty parameter.
-      # consolidation:
-      #   enabled: true
-
-      # If omitted, the feature is disabled and nodes will never expire.  If set to less time than it requires for a node
-      # to become ready, the node may expire before any pods successfully start.
-      # ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
-
-      # If omitted, the feature is disabled, nodes will never scale down due to low utilization
-      ttlSecondsAfterEmpty: 30
+  # Disruption section which describes the ways in which Karpenter can disrupt and replace Nodes
+  # Configuration in this section constrains how aggressive Karpenter can be with performing operations
+  # like rolling Nodes due to them hitting their maximum lifetime (expiry) or scaling down nodes to reduce cluster cost
+  disruption:
+    # Describes which types of Nodes Karpenter should consider for consolidation
+    # If using 'WhenUnderutilized', Karpenter will consider all nodes for consolidation and attempt to remove or replace Nodes when it discovers that the Node is underutilized and could be changed to reduce cost
+    # If using `WhenEmpty`, Karpenter will only consider nodes for consolidation that contain no workload pods
+    consolidationPolicy: WhenEmpty
+    
+    # The amount of time Karpenter should wait after discovering a consolidation decision
+    # This value can currently only be set when the consolidationPolicy is 'WhenEmpty'
+    # You can choose to disable consolidation entirely by setting the string value 'Never' here
+    consolidateAfter: 30s
+    
