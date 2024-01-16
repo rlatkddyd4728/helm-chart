@@ -10,7 +10,7 @@ spec:
         role: game
     spec:
       nodeClassRef:
-        name: game-nodeclass
+        name: game
       taints:
         - key: ng
           value: game
