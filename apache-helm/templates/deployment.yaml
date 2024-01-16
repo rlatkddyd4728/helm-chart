@@ -15,7 +15,13 @@ spec:
       labels:
         Tier: app
     spec:
-      # serviceAccountName: test
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: game
+      tolerations:
+      - key: ng
+        operator: Equal
+        value: game
+        effect: NoSchedule
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
