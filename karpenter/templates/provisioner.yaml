@@ -10,7 +10,7 @@ spec:
       value: game
       effect: NoSchedule
   labels:
-    tier: node
+    tier: Provisioner
     role: game
   requirements:
     - key: node.kubernetes.io/instance-type
