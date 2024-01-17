@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affinity
+  namespace: test
+  labels:
+    tier: test
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      tier: test
+  template:
+    metadata:
+      labels:
+        tier: test
+    spec:
+      nodeSelector:
+        tier: ng
+        role: game
+      tolerations:
+      - key: ng
+        operator: Equal
+        value: game
+        effect: NoSchedule
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: Tier
+                operator: In
+                values:
+                - app
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: test
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
+
+
