@@ -9,7 +9,7 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         karpenter.sh/discovery: "sy-kim-eks-cluster"
-amiSelectorTerms:
+  amiSelectorTerms:
     - name: amazon-eks-node-1.26-v20231230
   tags:
     Name: nv-dev-stg-node 
