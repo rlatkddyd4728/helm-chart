@@ -33,6 +33,13 @@ spec:
                 values:
                 - test
             topologyKey: kubernetes.io/hostname
+          - labelSelector:
+              matchExpressions:
+              - key: Tier
+                operator: In
+                values:
+                - app
+            topologyKey: kubernetes.io/hostname
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
