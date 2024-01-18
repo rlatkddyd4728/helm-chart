@@ -30,6 +30,8 @@ spec:
           labelSelector:
             matchLabels:
               Tier: app
+          nodeAffinityPolicy: [Honor]
+          nodeTaintsPolicy: [Honor]
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
