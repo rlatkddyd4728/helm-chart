@@ -26,13 +26,7 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 2
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: ScheduleAnyway
-          labelSelector:
-            matchLabels:
-              Tier: app
-        - maxSkew: 2
-          topologyKey: "topology.kubernetes.io/zone"
-          whenUnsatisfiable: ScheduleAnyway
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               Tier: app
