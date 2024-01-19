@@ -1,4 +1,4 @@
-{{- if .Values.test.enabled }}
+{{- if .Values.test.hpa_enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -36,7 +36,7 @@ spec:
     scaleUp:      ## pod 증가
       stabilizationWindowSeconds: 0         ## 기본값 -> 메트릭이 대상을 스케일업 해야 한다고 표시하면 즉시 스케일업
       policies:       ## 30초당 100% Pod 추가
-      - type: Percent
-        value: 100
+      - type: Pods
+        value: 1
         periodSeconds: 10
 {{- end }}
