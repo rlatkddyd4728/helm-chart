@@ -2,9 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-apache:
-  minReplicas: 1
-  maxReplicas: 10
+test:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
   cpu:
     targetCPUUtilizationPercentage: 50
   memory:

@@ -41,10 +41,18 @@ spec:
         # envFrom:
         #   - configMapRef:
         #       name: test-config
+        resources:
+{{ toYaml .Values.test.resources | indent 12 }}
         volumeMounts:
         - name: config
           mountPath: "/config"
           readOnly: true
+        readinessProbe:
+          httpGet:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
       volumes:
       # You set volumes at the Pod level, then mount them into containers inside that Pod
       - name: config
