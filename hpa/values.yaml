@@ -7,6 +7,6 @@ test:
   minReplicas: 3
   maxReplicas: 20
   cpu:
-    targetCPUUtilizationPercentage: 10
+    targetCPUUtilizationPercentage: 30
   memory:
-    targetMemoryUtilizationPercentage: 30
+    targetMemoryUtilizationPercentage: 50
