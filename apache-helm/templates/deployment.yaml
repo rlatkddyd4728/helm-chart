@@ -38,6 +38,11 @@ spec:
         - name: http
           containerPort: {{ .Values.containerPort }}
           protocol: TCP
+        env:
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
         # envFrom:
         #   - configMapRef:
         #       name: test-config
