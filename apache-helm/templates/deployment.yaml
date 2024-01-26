@@ -52,7 +52,7 @@ spec:
         - name: config
           mountPath: "/config"
           readOnly: true
-        readinessProbe:
+        startupProbe:
           httpGet:
             port: 80
           initialDelaySeconds: 10
