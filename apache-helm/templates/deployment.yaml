@@ -67,5 +67,3 @@ spec:
           items:
           - key: username
             path: test/user
-
-
