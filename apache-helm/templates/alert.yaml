@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: test
+  namespace: cattle-monitoring-system
+  labels:
+    alertmanagerConfig: slack
+spec:
+  route:
+    receiver: slack-notification
+  receivers:
+  - name: slack-notification
+    slackConfigs:
+    - sendResolved: true
+      apiURL:
+        key: https://hooks.slack.com/services/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
+        name: alertmanager-slack-notification
