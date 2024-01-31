@@ -13,8 +13,9 @@ spec:
     repeatInterval: 12h     ## 기본값 4시간 / 해결되지 않은 알람 재전송 기간 간격
     receiver: slack-notification
     routes:
-    - match:
-        severity: none
+    - matchType: =
+      name: severity
+      value: none
   receivers:
   - name: slack-notification
     slackConfigs:
