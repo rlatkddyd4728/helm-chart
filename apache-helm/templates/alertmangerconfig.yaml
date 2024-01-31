@@ -7,9 +7,13 @@ metadata:
     alertmanagerconfig: slack
 spec:
   route:
-    receiver: slack-notification
+    groupBy: ['job']        ##
+    groupWait: 30s          ## 기본값 30초로 / 그룹의 초기 대기 시간
+    groupInterval: 5m       ## 기본값 5분 /  그룹의 알람 기간 간격
+    repeatInterval: 12h     ## 기본값 4시간 / 해결되지 않은 알람 재전송 기간 간격
+    receiver: 'slack-notification'
   receivers:
-  - name: slack-notification
+  - name: 'slack-notification'
     slackConfigs:
     - sendResolved: true
       apiURL: 'https://hooks.slack.com/services/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'
