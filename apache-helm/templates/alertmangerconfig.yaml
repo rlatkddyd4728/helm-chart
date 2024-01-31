@@ -12,9 +12,8 @@ spec:
     groupInterval: 5m       ## 기본값 5분 /  그룹의 알람 기간 간격
     repeatInterval: 12h     ## 기본값 4시간 / 해결되지 않은 알람 재전송 기간 간격
     receiver: slack-notification
-    routes:
-    - matchers:
-      - matchType: =
+    matchers:
+      - matchType: '='
         name: severity
         value: none
   receivers:
