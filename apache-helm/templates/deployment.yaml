@@ -54,7 +54,7 @@ spec:
           readOnly: true
         startupProbe:
           httpGet:
-            port: 8080
+            port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5

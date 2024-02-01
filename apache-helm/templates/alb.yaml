@@ -16,7 +16,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 8080
+      targetPort: 80
       protocol: TCP
   loadBalancerSourceRanges:       ## 인바운드 룰 설정
   - "119.206.206.0/24"            ## AWS VPN CIDR
