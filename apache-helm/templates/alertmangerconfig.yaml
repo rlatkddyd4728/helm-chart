@@ -3,8 +3,6 @@ kind: AlertmanagerConfig
 metadata:
   name: slack-notification
   namespace: cattle-monitoring-system
-  labels:
-    alertmanagerconfig: slack
 spec:
   route:
     groupBy: ['namespace']        ##
