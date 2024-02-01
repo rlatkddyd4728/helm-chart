@@ -15,7 +15,7 @@ spec:
       labels:
         Tier: app
     spec:
-      restartPolicy: Never
+      restartPolicy: OnFailure
       nodeSelector:
         tier: ng
         role: game
