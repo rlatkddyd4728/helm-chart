@@ -16,6 +16,12 @@ spec:
       - matchType: '='
         name: severity
         value: none
+      - matchType: '='
+        name: severity
+        value: warning
+        - matchType: '='
+        name: severity
+        value: critical
   receivers:
   - name: slack-notification
     slackConfigs:
