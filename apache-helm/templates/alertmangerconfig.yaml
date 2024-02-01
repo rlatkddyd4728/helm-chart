@@ -24,4 +24,6 @@ spec:
   - name: slack-notification
     slackConfigs:
     - sendResolved: true
-      apiURL: "https://hooks.slack.com/services/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"
+      apiURL:
+        name: slack-webhook
+        key: slack_webhook_url
