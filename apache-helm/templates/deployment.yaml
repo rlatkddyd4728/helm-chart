@@ -15,6 +15,7 @@ spec:
       labels:
         Tier: app
     spec:
+      restartPolicy: Never
       nodeSelector:
         tier: ng
         role: game
@@ -34,7 +35,6 @@ spec:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
         imagePullPolicy: Always
-        restartPolicy: Never
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
@@ -53,7 +53,7 @@ spec:
         - name: config
           mountPath: "/config"
           readOnly: true
-        startupProbe:
+        readinessProbe:
           httpGet:
             port: 80
           initialDelaySeconds: 10
