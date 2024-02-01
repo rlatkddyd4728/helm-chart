@@ -1,40 +1,25 @@
-apiVersion: networking.k8s.io/v1 ## v1
-kind: Ingress ##Service
+apiVersion: v1
+kind: Service
 metadata:
-  name: apache-ingress
+  name: test-service
   namespace: test
   labels:
-    Tier: ingress
+    Tier: frontend
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-    alb.ingress.kubernetes.io/subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d 
-    alb.ingress.kubernetes.io/security-groups: sg-0ac39a8cc3edfcd28
-    alb.ingress.kubernetes.io/load-balancer-attributes: deletion_protection.enabled=false
-    # service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
-    # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
-    # service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용    
-    # service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d          ## 퍼블릭 서브넷 지정
+    service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용
+    service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true              ## 클라이언트 ip 보존    
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d       ## 퍼블릭 서브넷 지정
+    service.beta.kubernetes.io/aws-load-balancer-name: sy-kim-test-service
 spec:
-  # type: {{ .Values.service.type }}
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: apahce-service
-                port:
-                  number: {{ .Values.service.port }} 
-              # serviceName: apache-alb-service
-              # servicePort: {{ .Values.service.port }} 
-  # ports:
-  #   - port: {{ .Values.service.port }}
-  #     targetPort: {{ .Values.containerPort }}
-  #     protocol: TCP
-  #     name: http
-  # selector:
-  #   app: test-app-1
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  loadBalancerSourceRanges:       ## 인바운드 룰 설정
+  - "119.206.206.0/24"            ## AWS VPN CIDR
+  - "112.175.187.0/24"            ## Local PC CIDR
+  selector:
+    Tier: app
