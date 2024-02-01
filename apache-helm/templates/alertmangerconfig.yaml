@@ -19,7 +19,7 @@ spec:
       - matchType: '='
         name: severity
         value: warning
-        - matchType: '='
+      - matchType: '='
         name: severity
         value: critical
   receivers:
