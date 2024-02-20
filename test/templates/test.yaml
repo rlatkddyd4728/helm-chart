@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deploy-ver2
+  namespace: test
+  labels:
+    Tier: app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      Tier: app
+  template:
+    metadata:
+      labels:
+        Tier: app
+    spec:
+      containers:
+      - name: test
+        image: "{{ .Values.test.repository }}:{{ .Values.test.test_tag }}"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
+
