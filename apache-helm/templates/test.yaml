@@ -24,6 +24,9 @@ spec:
         - name: http
           containerPort: {{ .Values.containerPort }}
           protocol: TCP
+        env:
+          - name: Iamge_Tag
+            value: {{ .Values.test.test_tag }}
         # envFrom:
         #   - configMapRef:
         #       name: test-config
