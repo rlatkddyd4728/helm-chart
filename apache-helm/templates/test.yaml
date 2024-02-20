@@ -20,6 +20,7 @@ spec:
       - name: test
         image: "{{ .Values.test.repository }}:{{ .Values.test.test_tag }}"
         imagePullPolicy: Always
+        command: ["sh", "-c", "dotnet Executer.dll AppBinary=UserApp.dll ImageTag={{ .Values.test.test_tag }}"]
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
