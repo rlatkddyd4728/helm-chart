@@ -29,19 +29,6 @@ spec:
         operator: Equal
         value: game
         effect: NoSchedule
-      topologySpreadConstraints:
-        - maxSkew: 0
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: ScheduleAnyway
-          labelSelector:
-            matchLabels:
-              Tier: app
-        - maxSkew: 0
-          topologyKey: "topology.kubernetes.io/zone"
-          whenUnsatisfiable: ScheduleAnyway
-          labelSelector:
-            matchLabels:
-              Tier: app
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
