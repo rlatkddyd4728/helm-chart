@@ -7,6 +7,12 @@ metadata:
     Tier: app
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
   selector:
     matchLabels:
       Tier: app
@@ -24,8 +30,14 @@ spec:
         value: game
         effect: NoSchedule
       topologySpreadConstraints:
-        - maxSkew: 2
+        - maxSkew: 0
           topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              Tier: app
+        - maxSkew: 0
+          topologyKey: "topology.kubernetes.io/zone"
           whenUnsatisfiable: ScheduleAnyway
           labelSelector:
             matchLabels:
@@ -47,7 +59,7 @@ spec:
         #   - configMapRef:
         #       name: test-config
         resources:
-{{ toYaml .Values.test.resources | indent 12 }}
+{{ toYaml .Values.image.resources | indent 12 }}
         volumeMounts:
         - name: config
           mountPath: "/config"
