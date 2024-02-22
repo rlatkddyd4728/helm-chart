@@ -36,6 +36,12 @@ spec:
             labelSelector:
               matchLabels:
                 Tier: app
+          - maxSkew: 2
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                Tier: app
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
