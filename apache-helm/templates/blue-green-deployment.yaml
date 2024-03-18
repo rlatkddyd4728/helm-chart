@@ -38,11 +38,6 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
-  strategy:
-    blueGreen:
-      activeService: blue-green-service
-      previewService: blue-green-service
-      autoPromotionEnabled: false
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
