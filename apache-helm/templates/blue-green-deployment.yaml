@@ -47,7 +47,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: test-blue-green
+  name: test-blue-green-deploy
   namespace: test
 spec:
   selector:
@@ -57,7 +57,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: test-blue-green-deploy
-    namespace: test
   strategy:
 
     # Blue-green update strategy
