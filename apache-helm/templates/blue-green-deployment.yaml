@@ -38,34 +38,6 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
-  strategy:
-
-    # Blue-green update strategy
-    blueGreen:
-
-      # Reference to service that the rollout modifies as the active service.
-      # Required.
-      activeService: blue-service
-
-      # Name of the service that the rollout modifies as the preview service.
-      # +optional
-      previewService: green-service
-
-      # The number of replicas to run under the preview service before the
-      # switchover. Once the rollout is resumed the new ReplicaSet will be fully
-      # scaled up before the switch occurs +optional
-      previewReplicaCount: 1
-
-      # Indicates if the rollout should automatically promote the new ReplicaSet
-      # to the active service or enter a paused state. If not specified, the
-      # default value is true. +optional
-      autoPromotionEnabled: false
-
-      # Adds a delay before scaling down the previous ReplicaSet. If omitted,
-      # the Rollout waits 30 seconds before scaling down the previous ReplicaSet.
-      # A minimum of 30 seconds is recommended to ensure IP table propagation
-      # across the nodes in a cluster.
-      scaleDownDelaySeconds: 30
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
