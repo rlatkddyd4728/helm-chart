@@ -47,7 +47,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: test-blue-green-deploy
+  name: test-blue-green
   namespace: test
 spec:
   workloadRef: 
