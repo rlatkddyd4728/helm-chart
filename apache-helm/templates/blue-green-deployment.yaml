@@ -62,9 +62,9 @@ spec:
       # Required.
       activeService: blue-service
 
-      # Name of the service that the rollout modifies as the preview service.
-      # +optional
-      previewService: green-service
+      # # Name of the service that the rollout modifies as the preview service.
+      # # +optional
+      # previewService: green-service
 
       # The number of replicas to run under the preview service before the
       # switchover. Once the rollout is resumed the new ReplicaSet will be fully
