@@ -50,6 +50,7 @@ metadata:
   name: test-blue-green-deploy
   namespace: test
 spec:
+  replicas: 2
   selector:
     matchLabels:
       Tier: app
