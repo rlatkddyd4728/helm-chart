@@ -1,12 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: test-blue-green-deploy
   namespace: test
   labels:
     Tier: app
 spec:
-  replicas: 2
+  replicas: 3
   revisionHistoryLimit: 1
   selector:
     matchLabels:
@@ -38,21 +38,6 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
----
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: test-blue-green-deploy
-  namespace: test
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      Tier: app
-  workloadRef: 
-    apiVersion: apps/v1
-    kind: Deployment
-    name: test-blue-green-deploy
   strategy:
 
     # Blue-green update strategy
