@@ -50,6 +50,9 @@ metadata:
   name: test-blue-green
   namespace: test
 spec:
+  selector:
+    matchLabels:
+      Tier: app
   workloadRef: 
     apiVersion: apps/v1
     kind: Deployment
