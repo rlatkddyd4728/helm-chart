@@ -66,10 +66,10 @@ spec:
       # # +optional
       # previewService: green-service
 
-      # The number of replicas to run under the preview service before the
-      # switchover. Once the rollout is resumed the new ReplicaSet will be fully
-      # scaled up before the switch occurs +optional
-      previewReplicaCount: 1
+      # # The number of replicas to run under the preview service before the
+      # # switchover. Once the rollout is resumed the new ReplicaSet will be fully
+      # # scaled up before the switch occurs +optional
+      # previewReplicaCount: 1
 
       # Indicates if the rollout should automatically promote the new ReplicaSet
       # to the active service or enter a paused state. If not specified, the
