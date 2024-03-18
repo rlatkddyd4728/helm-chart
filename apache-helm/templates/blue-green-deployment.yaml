@@ -1,5 +1,5 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: test-blue-green-deploy
   namespace: test
@@ -43,3 +43,44 @@ spec:
       activeService: blue-green-service
       previewService: blue-green-service
       autoPromotionEnabled: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: test-blue-green-deploy
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      Tier: app
+  workloadRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-blue-green-deploy
+    namespace: test
+  rollbackWindow:
+    revisions: 1
+  strategy:
+
+    # Blue-green update strategy
+    blueGreen:
+
+      # Reference to service that the rollout modifies as the active service.
+      # Required.
+      activeService: active-service
+
+      # The number of replicas to run under the preview service before the
+      # switchover. Once the rollout is resumed the new ReplicaSet will be fully
+      # scaled up before the switch occurs +optional
+      previewReplicaCount: 1
+
+      # Indicates if the rollout should automatically promote the new ReplicaSet
+      # to the active service or enter a paused state. If not specified, the
+      # default value is true. +optional
+      autoPromotionEnabled: false
+
+      # Adds a delay before scaling down the previous ReplicaSet. If omitted,
+      # the Rollout waits 30 seconds before scaling down the previous ReplicaSet.
+      # A minimum of 30 seconds is recommended to ensure IP table propagation
+      # across the nodes in a cluster.
+      scaleDownDelaySeconds: 30
