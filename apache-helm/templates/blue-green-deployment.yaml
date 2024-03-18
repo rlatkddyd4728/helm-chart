@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: test-blue-green-deploy
+  namespace: test
+  labels:
+    Tier: app
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      Tier: app
+  template:
+    metadata:
+      labels:
+        Tier: app
+    spec:
+      nodeSelector:
+        tier: ng
+        role: game
+      tolerations:
+      - key: ng
+        operator: Equal
+        value: game
+        effect: NoSchedule
+      containers:
+      - name: test
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+  strategy:
+    blueGreen:
+      activeService: blue-service
+      previewService: green-service
+      autoPromotionEnabled: false
