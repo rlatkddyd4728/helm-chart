@@ -8,9 +8,9 @@ metadata:
     role: autoscaling
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: test-deploy
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: test-blue-green-deploy
   minReplicas: {{ .Values.test.minReplicas }}
   maxReplicas: {{ .Values.test.maxReplicas }}
   metrics:
