@@ -40,6 +40,6 @@ spec:
           timeoutSeconds: 5
   strategy:
     blueGreen:
-      activeService: blue-service
-      previewService: green-service
+      activeService: blue-green-service
+      previewService: blue-green-service
       autoPromotionEnabled: false
