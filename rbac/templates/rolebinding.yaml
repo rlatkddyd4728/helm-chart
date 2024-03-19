@@ -5,6 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: test
+  namespace: test
 roleRef:
   kind: ClusterRole
   name: ClusterRole
