@@ -24,31 +24,31 @@ spec:
   - "112.175.187.0/24"            ## Local PC CIDR
   selector:
     Tier: app
----
+# ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: green-service
-  namespace: test
-  labels:
-    Tier: frontend
-    color: green
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용
-    service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true              ## 클라이언트 ip 보존    
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d       ## 퍼블릭 서브넷 지정
-    service.beta.kubernetes.io/aws-load-balancer-name: sy-kim-test-green-service
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: 80
-      protocol: TCP
-  loadBalancerSourceRanges:       ## 인바운드 룰 설정
-  - "119.206.206.0/24"            ## AWS VPN CIDR
-  - "112.175.187.0/24"            ## Local PC CIDR
-  selector:
-    Tier: app
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: green-service
+#   namespace: test
+#   labels:
+#     Tier: frontend
+#     color: green
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-type: external             ## nlb
+#     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip        ## 타겟 그룹 타입 ip
+#     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    ## 외부 트래픽 허용
+#     service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true              ## 클라이언트 ip 보존    
+#     service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d       ## 퍼블릭 서브넷 지정
+#     service.beta.kubernetes.io/aws-load-balancer-name: sy-kim-test-green-service
+# spec:
+#   type: LoadBalancer
+#   ports:
+#     - port: 80
+#       targetPort: 80
+#       protocol: TCP
+#   loadBalancerSourceRanges:       ## 인바운드 룰 설정
+#   - "119.206.206.0/24"            ## AWS VPN CIDR
+#   - "112.175.187.0/24"            ## Local PC CIDR
+#   selector:
+#     Tier: app
