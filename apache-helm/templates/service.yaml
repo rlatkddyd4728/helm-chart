@@ -12,7 +12,7 @@ spec:
   - protocol: TCP
     port: {{ .Values.service.port }}
     targetPort: {{ .Values.containerPort }}
-  type: Service
+  type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1 
 kind: Ingress 
