@@ -11,7 +11,7 @@ spec:
         Name: "sy_kim_common_sg"
   amiFamily: AL2
   amiSelectorTerms:
-    - name: amazon-eks-node-1.26-v20240110
+    - name: amazon-eks-node-1.28-v20240329
   tags:
     Name: nv-dev-stg-node 
   blockDeviceMappings:
