@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-blue-green-deploy
-  namespace: test
+  name: test-ping
+  namespace: ping
   labels:
     Tier: app
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 1
   selector:
     matchLabels:
