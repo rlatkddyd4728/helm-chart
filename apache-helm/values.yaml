@@ -11,8 +11,8 @@ image:
       memory: "1.5Gi"
 
 test:
-  repository: 827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/nv_dev_front
-  test_tag: nv_dev_front-20231114.045800
+  repository: 827398730268.dkr.ecr.us-west-2.amazonaws.com/sy_kim_test
+  test_tag: 20240416.042255
 
 
 containerPort: 80
