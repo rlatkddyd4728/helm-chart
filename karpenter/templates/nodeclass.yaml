@@ -32,29 +32,13 @@ spec:
     #!/bin/bash
     echo "Running custom user data script"
 
-    export dev_id=sy_kim
+    export se_id=sy_kim
     export region=ap-southeast-3
-
-    #=============================
-    # hostname
-    #=============================
-    # ng_name=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='karpenter.sh/nodepool'].Value" --output text --region ap-southeast-3)
-
-    # resource_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-
-    # tag_name=${prefix}-${env}-${ng_name}-$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4 | cut -d. -f3,4 | sed s/"\."/"-"/g)   
-
-    # hostnamectl set-hostname ${tag_name}
-
-    #=============================
-    # tag
-    #=============================
-    # aws ec2 create-tags --resources ${resource_id} --tags Key=Name,Value=${tag_name} --region ${region}
 
     #=============================
     # useradd
     #=============================
-    users=("${dev_id}" "rundeck")
+    users=("${se_id}" "rundeck")
     for user in "${users[@]}"; do
         if [ "$user" == "" ]; then
             continue
