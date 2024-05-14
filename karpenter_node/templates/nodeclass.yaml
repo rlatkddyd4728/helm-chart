@@ -9,7 +9,7 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         Name: "sy_kim_common_sg"
-  amiFamily: AL2
+  amiFamily: AL2023
   amiSelectorTerms:
     - name: amazon-eks-node-1.28-v20240329
   tags:
