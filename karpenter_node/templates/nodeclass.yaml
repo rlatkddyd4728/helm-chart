@@ -12,8 +12,6 @@ spec:
   amiFamily: AL2
   amiSelectorTerms:
     - name: amazon-eks-node-1.29-v20240506
-  tags:
-    Name: nv-dev-stg-node 
   blockDeviceMappings:
     - deviceName: /dev/xvda
       ebs:
@@ -21,6 +19,10 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
+  metadataOptions:
+    httpEndpoint: enabled
+    httpPutResponseHopLimit: 2
+    httpTokens: optional
   instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
@@ -32,8 +34,25 @@ spec:
     #!/bin/bash
     echo "Running custom user data script"
 
+    export prefix=nv
+    export env=dev
     export se_id=sy_kim
     export region=ap-southeast-3
+
+    #=============================
+    # hostname
+    #=============================
+    ng_name=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='karpenter.sh/nodepool'].Value" --output text --region ${region})
+
+    resource_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+
+    tag_name=${prefix}-${env}-${ng_name}-$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4 | cut -d. -f3,4 | sed s/"\."/"-"/g)   
+
+    #=============================
+    # tag
+    #=============================
+    aws ec2 create-tags --resources ${resource_id} --tags Key=Name,Value=${tag_name} --region ${region}
+
 
     #=============================
     # useradd
