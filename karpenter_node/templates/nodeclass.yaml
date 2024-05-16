@@ -21,7 +21,7 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
-  instanceProfile: "sy_kim-KarpenterNodeInstanceProfile"
+  instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
     Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
