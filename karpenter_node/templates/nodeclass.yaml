@@ -39,7 +39,7 @@ spec:
     export se_id=sy_kim
     export region=ap-southeast-3
 
-    export TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+    export TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 60")
     export INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
     export INSTANCE_IP=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-ipv4)
 
@@ -57,6 +57,7 @@ spec:
     #=============================
     # tag
     #=============================
+    # aws ec2 create-tags --resources ${resource_id} --tags Key=Name,Value=${tag_name} --region ${region}
     aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=${tag_name} --region ${region}
 
 
