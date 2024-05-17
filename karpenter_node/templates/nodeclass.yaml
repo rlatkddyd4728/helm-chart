@@ -19,10 +19,10 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
-  metadataOptions:
-    httpEndpoint: enabled
-    httpPutResponseHopLimit: 2
-    httpTokens: optional
+  # metadataOptions:
+  #   httpEndpoint: enabled
+  #   httpPutResponseHopLimit: 2
+  #   httpTokens: optional
   instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
