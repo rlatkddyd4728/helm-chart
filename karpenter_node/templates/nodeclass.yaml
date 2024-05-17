@@ -39,19 +39,25 @@ spec:
     export se_id=sy_kim
     export region=ap-southeast-3
 
+    export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+    export INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+    export INSTANCE_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-ipv4)
+
     #=============================
     # hostname
     #=============================
-    ng_name=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='karpenter.sh/nodepool'].Value" --output text --region ${region})
+    # ng_name=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='karpenter.sh/nodepool'].Value" --output text --region ${region})
+    ng_name=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --query "Tags[?Key=='karpenter.sh/nodepool'].Value" --output text --region ${region})
+    
+    # resource_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 
-    resource_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-
-    tag_name=${prefix}-${env}-${ng_name}-$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4 | cut -d. -f3,4 | sed s/"\."/"-"/g)   
+    # tag_name=${prefix}-${env}-${ng_name}-$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4 | cut -d. -f3,4 | sed s/"\."/"-"/g)   
+    tag_name=${prefix}-${env}-${ng_name}-$($INSTANCE_IP | cut -d. -f3,4 | sed s/"\."/"-"/g)   
 
     #=============================
     # tag
     #=============================
-    aws ec2 create-tags --resources ${resource_id} --tags Key=Name,Value=${tag_name} --region ${region}
+    aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=${tag_name} --region ${region}
 
 
     #=============================
