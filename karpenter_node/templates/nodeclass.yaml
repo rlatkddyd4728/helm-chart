@@ -21,7 +21,7 @@ spec:
         throughput: 125
   metadataOptions:
     httpEndpoint: enabled
-    httpPutResponseHopLimit: 1
+    httpPutResponseHopLimit: 2
     httpTokens: required
   instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
