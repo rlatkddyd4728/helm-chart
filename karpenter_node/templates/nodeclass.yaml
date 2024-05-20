@@ -22,7 +22,7 @@ spec:
   metadataOptions:
     httpEndpoint: enabled
     httpPutResponseHopLimit: 1
-    # httpTokens: optional
+    httpTokens: requied
   instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
