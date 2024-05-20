@@ -22,6 +22,7 @@ spec:
       labels:
         Tier: app
     spec:
+      serviceAccountName: test-sa 
       nodeSelector:
         tier: ng
         role: game
