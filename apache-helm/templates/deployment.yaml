@@ -60,7 +60,7 @@ spec:
       dnsConfig: # 해당 부분이다.
         options:
           - name: ndots
-            value: "2" # value로 2를 입력한다.
+            value: "1" # value로 2를 입력한다.
         # envFrom:
         #   - configMapRef:
         #       name: test-config
