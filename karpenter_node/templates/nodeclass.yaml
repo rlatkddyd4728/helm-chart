@@ -10,8 +10,8 @@ spec:
     - tags:
         Name: "sy_kim_common_sg"
   amiFamily: AL2
-  amiSelectorTerms:
-    - name: amazon-eks-node-1.29-v20240506
+  # amiSelectorTerms:
+  #   - name: amazon-eks-node-1.29-v20240506
   blockDeviceMappings:
     - deviceName: /dev/xvda
       ebs:
