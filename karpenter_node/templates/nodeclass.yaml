@@ -9,9 +9,9 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         Name: "sy_kim_common_sg"
-  amiFamily: AL2
-  # amiSelectorTerms:
-  #   - name: amazon-eks-node-1.29-v20240506
+  amiFamily: AL2023
+  amiSelectorTerms:
+    - name: amazon-eks-node-al2023-x86_64-standard-1.29-v20240531
   blockDeviceMappings:
     - deviceName: /dev/xvda
       ebs:
@@ -19,10 +19,10 @@ spec:
         volumeType: gp3
         deleteOnTermination: true
         throughput: 125
-  metadataOptions:
-    httpEndpoint: enabled
-    httpPutResponseHopLimit: 2
-    httpTokens: required
+  # metadataOptions:
+  #   httpEndpoint: enabled
+  #   httpPutResponseHopLimit: 2
+  #   httpTokens: required
   instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
   userData:  |
     MIME-Version: 1.0
