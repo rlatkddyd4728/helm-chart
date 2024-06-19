@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: test-deploy-ver2
-  namespace: test
+  namespace: ping
   labels:
     Tier: app
 spec:
