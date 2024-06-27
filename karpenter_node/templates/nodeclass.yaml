@@ -23,7 +23,7 @@ spec:
   #   httpEndpoint: enabled
   #   httpPutResponseHopLimit: 2
   #   httpTokens: required
-  instanceProfile: "sy_kim_KarpenterNodeInstanceProfile"
+  instanceProfile: "eks-74c82b95-54c2-47ff-8fb5-520466bd7b16"
   userData:  |
     MIME-Version: 1.0
     Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
