@@ -11,7 +11,7 @@ spec:
         Name: "sy_kim_common_sg"
   amiFamily: AL2023
   amiSelectorTerms:
-    - name: amazon-eks-node-al2023-x86_64-standard-1.29-v20240531
+    - name: amazon-eks-node-al2023-x86_64-standard-1.29-v20240625
   blockDeviceMappings:
     - deviceName: /dev/xvda
       ebs:
@@ -23,8 +23,7 @@ spec:
   #   httpEndpoint: enabled
   #   httpPutResponseHopLimit: 2
   #   httpTokens: required
-  role: "sy_kim_eks_node_role"
-  # instanceProfile: "eks-74c82b95-54c2-47ff-8fb5-520466bd7b16"
+  instanceProfile: "sy_kim_eks_node_role"
   userData:  |
     MIME-Version: 1.0
     Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
