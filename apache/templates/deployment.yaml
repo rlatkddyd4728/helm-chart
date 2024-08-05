@@ -57,6 +57,12 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.hostIP
+        readinessProbe:
+          httpGet:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
       dnsConfig: # 해당 부분이다.
         options:
           - name: ndots
@@ -70,12 +76,6 @@ spec:
         - name: config
           mountPath: "/config"
           readOnly: true
-        readinessProbe:
-          httpGet:
-            port: 80
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 5
       volumes:
       # You set volumes at the Pod level, then mount them into containers inside that Pod
       - name: config
