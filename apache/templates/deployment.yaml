@@ -63,6 +63,12 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
+        resources:
+{{ toYaml .Values.image.resources | indent 12 }}
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
       dnsConfig: # 해당 부분이다.
         options:
           - name: ndots
@@ -70,12 +76,6 @@ spec:
         # envFrom:
         #   - configMapRef:
         #       name: test-config
-        resources:
-{{ toYaml .Values.image.resources | indent 12 }}
-        volumeMounts:
-        - name: config
-          mountPath: "/config"
-          readOnly: true
       volumes:
       # You set volumes at the Pod level, then mount them into containers inside that Pod
       - name: config
