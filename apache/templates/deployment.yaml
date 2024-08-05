@@ -85,3 +85,5 @@ spec:
           items:
           - key: username
             path: test/user
+          - key: keys
+            path: test/keys
