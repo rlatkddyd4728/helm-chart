@@ -57,12 +57,17 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.hostIP
-        readinessProbe:
+        startupProbe:
           httpGet:
             port: 80
-          initialDelaySeconds: 10
+          initialDelaySeconds: 30
           periodSeconds: 10
-          timeoutSeconds: 5
+        # readinessProbe:
+        #   httpGet:
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 5
         resources:
 {{ toYaml .Values.image.resources | indent 12 }}
         volumeMounts:
