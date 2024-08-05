@@ -46,7 +46,7 @@ spec:
       #           Tier: app
       containers:
       - name: test
-        image: "{{ .Values.test.repository }}:{{ .Values.test.test_tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
         imagePullPolicy: Always
         ports:
         - name: http
