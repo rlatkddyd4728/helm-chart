@@ -1,19 +1,19 @@
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
 metadata:
-  name: game
+  name: battle
 spec:
   template:
     metadata:
       labels:
         tier: ng
-        role: game
+        role: battle
     spec:
       nodeClassRef:
-        name: game
+        name: battle
       taints:
         - key: ng
-          value: game
+          value: battle
           effect: NoSchedule
       requirements:
         - key: node.kubernetes.io/instance-type
