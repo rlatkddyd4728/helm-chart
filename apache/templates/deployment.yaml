@@ -68,8 +68,6 @@ spec:
         #   initialDelaySeconds: 10
         #   periodSeconds: 10
         #   timeoutSeconds: 5
-#         resources:
-# {{ toYaml .Values.image.resources | indent 12 }}
         volumeMounts:
         - name: config
           mountPath: "/config"
