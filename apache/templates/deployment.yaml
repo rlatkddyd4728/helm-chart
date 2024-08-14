@@ -25,11 +25,11 @@ spec:
       # serviceAccountName: test-sa 
       nodeSelector:
         tier: ng
-        role: game
+        role: battle
       tolerations:
       - key: ng
         operator: Equal
-        value: game
+        value: battle
         effect: NoSchedule
       # topologySpreadConstraints:
       #     - maxSkew: 2
