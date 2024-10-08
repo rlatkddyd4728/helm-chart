@@ -5,7 +5,7 @@ metadata:
 spec:
   subnetSelectorTerms:
     - tags:
-        Name: "sy_kim_pri_*"
+        Name: "sy_kim_pub_*"
   securityGroupSelectorTerms:
     - tags:
         Name: "sy_kim_common_sg"
