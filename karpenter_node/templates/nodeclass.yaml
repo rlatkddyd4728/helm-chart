@@ -9,6 +9,7 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         Name: "sy_kim_common_sg"
+  associatePublicIpAddress: true
   amiFamily: AL2023
   amiSelectorTerms:
     - name: amazon-eks-node-al2023-x86_64-standard-1.30-v20240904
