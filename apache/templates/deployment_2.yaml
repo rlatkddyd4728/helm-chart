@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-deploy
-  namespace: test2
+  name: test2-deploy
+  namespace: test
   labels:
     Tier: app
 spec:
