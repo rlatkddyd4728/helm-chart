@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deploy
+  namespace: test2
+  labels:
+    Tier: app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 100%
+    #   maxUnavailable: 0
+  selector:
+    matchLabels:
+      Tier: app
+  template:
+    metadata:
+      labels:
+        Tier: app
+    spec:
+      # serviceAccountName: test-sa 
+      nodeSelector:
+        tier: ng
+        role: battle
+      tolerations:
+      - key: ng
+        operator: Equal
+        value: battle
+        effect: NoSchedule
+      # topologySpreadConstraints:
+      #     - maxSkew: 2
+      #       topologyKey: topology.kubernetes.io/zone
+      #       whenUnsatisfiable: ScheduleAnyway
+      #       labelSelector:
+      #         matchLabels:
+      #           Tier: app
+      #     - maxSkew: 2
+      #       topologyKey: kubernetes.io/hostname
+      #       whenUnsatisfiable: ScheduleAnyway
+      #       labelSelector:
+      #         matchLabels:
+      #           Tier: app
+      hostNetwork: false
+      containers:
+      - name: test
+        image: "827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/nv_dev_front:nv_dev_front-20231114.045800"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          hostPort: 8081
+          protocol: TCP
+        env:
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+        startupProbe:
+          httpGet:
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 5
+        resources:
+{{ toYaml .Values.image.resources | indent 12 }}
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+      dnsConfig: # 해당 부분이다.
+        options:
+          - name: ndots
+            value: "1" # value로 2를 입력한다.
+        # envFrom:
+        #   - configMapRef:
+        #       name: test-config
+      volumes:
+      # You set volumes at the Pod level, then mount them into containers inside that Pod
+      - name: config
+        configMap:
+          # Provide the name of the ConfigMap you want to mount.
+          name: test-config
+          items:
+          - key: username
+            path: test/user
+          - key: keys
+            path: test/keys
