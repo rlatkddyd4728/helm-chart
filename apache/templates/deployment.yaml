@@ -44,7 +44,7 @@ spec:
       #       labelSelector:
       #         matchLabels:
       #           Tier: app
-      hostNetwork: true
+      hostNetwork: false
       containers:
       - name: test
         image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
