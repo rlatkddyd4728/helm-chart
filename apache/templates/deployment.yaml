@@ -52,7 +52,7 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
-          hostPort: 8080
+          hostPort: 80
           protocol: TCP
         env:
           - name: HOST_IP
