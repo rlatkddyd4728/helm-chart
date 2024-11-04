@@ -52,8 +52,7 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
-          hostPort: 8080
-          protocol: TCP
+          # hostPort: 8080
         env:
           - name: HOST_IP
             valueFrom:
@@ -83,14 +82,14 @@ spec:
         # envFrom:
         #   - configMapRef:
         #       name: test-config
-      volumes:
-      # You set volumes at the Pod level, then mount them into containers inside that Pod
-      - name: config
-        configMap:
-          # Provide the name of the ConfigMap you want to mount.
-          name: test-config
-          items:
-          - key: username
-            path: test/user
-          - key: keys
-            path: test/keys
+      # volumes:
+      # # You set volumes at the Pod level, then mount them into containers inside that Pod
+      # - name: config
+      #   configMap:
+      #     # Provide the name of the ConfigMap you want to mount.
+      #     name: test-config
+      #     items:
+      #     - key: username
+      #       path: test/user
+      #     - key: keys
+      #       path: test/keys
