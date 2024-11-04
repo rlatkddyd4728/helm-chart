@@ -71,10 +71,10 @@ spec:
         #   timeoutSeconds: 5
         resources:
 {{ toYaml .Values.image.resources | indent 12 }}
-        volumeMounts:
-        - name: config
-          mountPath: "/config"
-          readOnly: true
+        # volumeMounts:
+        # - name: config
+        #   mountPath: "/config"
+        #   readOnly: true
       dnsConfig: # 해당 부분이다.
         options:
           - name: ndots
