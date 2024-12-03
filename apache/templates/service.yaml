@@ -26,7 +26,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: alb
   rules:
   - host: "ok-dev-test.elb.ap-southeast-3.amazonaws.com"
     http:

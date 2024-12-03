@@ -25,7 +25,6 @@ metadata:
   labels:
     tier: frontend
 spec:
-  ingressClassName: alb
   rules:
   - host: "ok-dev-test2.elb.ap-southeast-3.amazonaws.com"
     http:
