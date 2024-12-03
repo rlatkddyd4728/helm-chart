@@ -15,4 +15,34 @@ spec:
     port: 80
     targetPort: 80
   type: ClusterIP
+---
+---
+apiVersion: networking.k8s.io/v1 
+kind: Ingress 
+metadata:
+  name: test2
+  namespace: test
+  labels:
+    tier: frontend
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: ok-dev-test2
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/subnets: subnet-05ac7d9b7c1509757,subnet-03acee8be974e8d6d 
+    alb.ingress.kubernetes.io/inbound-cidrs: '119.206.206.251/32'
+    alb.ingress.kubernetes.io/load-balancer-attributes: deletion_protection.enabled=false
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "ok-dev-test2.elb.ap-southeast-3.amazonaws.com"
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: test2 
+              port:
+                number: 80
 

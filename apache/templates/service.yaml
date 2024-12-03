@@ -24,7 +24,7 @@ metadata:
   labels:
     tier: frontend
   annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: sykim-test
+    alb.ingress.kubernetes.io/load-balancer-name: ok-dev-test
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
@@ -34,7 +34,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: "test-a.nexon.com"
+  - host: "ok-dev-test.elb.ap-southeast-3.amazonaws.com"
     http:
       paths:
         - path: /
@@ -42,16 +42,6 @@ spec:
           backend:
             service:
               name: test 
-              port:
-                number: 80
-  - host: "test-c.nexon.com"
-    http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: test2
               port:
                 number: 80
 
