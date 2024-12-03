@@ -4,7 +4,8 @@ metadata:
   name: test2-deploy
   namespace: test
   labels:
-    Tier: app
+    tier: app
+    role: test2
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 1
@@ -16,11 +17,13 @@ spec:
     #   maxUnavailable: 0
   selector:
     matchLabels:
-      Tier: app
+      tier: app
+      role: test2
   template:
     metadata:
       labels:
-        Tier: app
+        tier: app
+        role: test2
     spec:
       # serviceAccountName: test-sa 
       nodeSelector:
@@ -37,23 +40,22 @@ spec:
       #       whenUnsatisfiable: ScheduleAnyway
       #       labelSelector:
       #         matchLabels:
-      #           Tier: app
+      #           tier: app
       #     - maxSkew: 2
       #       topologyKey: kubernetes.io/hostname
       #       whenUnsatisfiable: ScheduleAnyway
       #       labelSelector:
       #         matchLabels:
-      #           Tier: app
+      #           tier: app
       hostNetwork: false
       containers:
       - name: test
-        image: "827398730268.dkr.ecr.ap-southeast-3.amazonaws.com/nv_dev_front:nv_dev_front-20231114.045800"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.test_tag }}"
         imagePullPolicy: Always
         ports:
         - name: http
           containerPort: {{ .Values.containerPort }}
-          hostPort: 8081
-          protocol: TCP
+          # hostPort: 8080
         env:
           - name: HOST_IP
             valueFrom:
@@ -72,10 +74,10 @@ spec:
         #   timeoutSeconds: 5
         resources:
 {{ toYaml .Values.image.resources | indent 12 }}
-        volumeMounts:
-        - name: config
-          mountPath: "/config"
-          readOnly: true
+        # volumeMounts:
+        # - name: config
+        #   mountPath: "/config"
+        #   readOnly: true
       dnsConfig: # 해당 부분이다.
         options:
           - name: ndots

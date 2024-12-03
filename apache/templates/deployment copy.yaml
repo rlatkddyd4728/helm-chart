@@ -1,11 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-deploy
+  name: test2-deploy
   namespace: test
   labels:
     tier: app
-    role: test
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 1
@@ -18,12 +17,10 @@ spec:
   selector:
     matchLabels:
       tier: app
-      role: test
   template:
     metadata:
       labels:
         tier: app
-        role: test
     spec:
       # serviceAccountName: test-sa 
       nodeSelector:

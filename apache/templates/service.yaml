@@ -5,9 +5,11 @@ metadata:
   namespace: test
   labels:
     tier: backend
+    role: test
 spec:
   selector:
     tier: app
+    role: test
   ports:
   - protocol: TCP
     port: 80
@@ -40,6 +42,16 @@ spec:
           backend:
             service:
               name: test 
+              port:
+                number: 80
+  - host: "test-c.nexon.com"
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: test2
               port:
                 number: 80
 
