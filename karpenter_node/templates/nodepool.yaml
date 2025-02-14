@@ -10,7 +10,7 @@ spec:
         role: monitoring
     spec:
       nodeClassRef:
-        apiVersion: karpenter.k8s.aws
+        group: karpenter.k8s.aws  # Updated since only a single version will be served
         kind: EC2NodeClass
         name: monitoring
       taints:
