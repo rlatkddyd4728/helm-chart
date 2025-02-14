@@ -1,19 +1,19 @@
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
 metadata:
-  name: battle
+  name: monitoring
 spec:
   template:
     metadata:
       labels:
         tier: ng
-        role: battle
+        role: monitoring
     spec:
       nodeClassRef:
-        name: battle
+        name: monitoring
       taints:
         - key: ng
-          value: battle
+          value: monitoring
           effect: NoSchedule
       requirements:
         - key: node.kubernetes.io/instance-type
