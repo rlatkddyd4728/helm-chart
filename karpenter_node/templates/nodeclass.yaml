@@ -12,7 +12,7 @@ spec:
   associatePublicIPAddress: true
   amiFamily: AL2023
   amiSelectorTerms:
-    - name: amazon-eks-node-al2023-x86_64-standard-1.31-v20250203
+    - name: amazon-eks-node-al2023-x86_64-standard-1.32-v20250715
   blockDeviceMappings:
     - deviceName: /dev/xvda
       ebs:
