@@ -1,21 +1,21 @@
 apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
-  name: monitoring
+  name: loki
 spec:
   template:
     metadata:
       labels:
         tier: ng
-        role: monitoring
+        role: loki
     spec:
       nodeClassRef:
         group: karpenter.k8s.aws  # Updated since only a single version will be served
         kind: EC2NodeClass
-        name: monitoring
+        name: loki
       taints:
         - key: ng
-          value: monitoring
+          value: loki
           effect: NoSchedule
       expireAfter: Never
       requirements:
